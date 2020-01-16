@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{2A4D2B7A-43B2-4D9F-9DBE-19C5F6D01EFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questionnaire", "Persistencia\Questionnaire.csproj", "{5260BCA9-32AE-405A-9D09-F6572823315D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A4D2B7A-43B2-4D9F-9DBE-19C5F6D01EFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A4D2B7A-43B2-4D9F-9DBE-19C5F6D01EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A4D2B7A-43B2-4D9F-9DBE-19C5F6D01EFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A4D2B7A-43B2-4D9F-9DBE-19C5F6D01EFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5260BCA9-32AE-405A-9D09-F6572823315D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5260BCA9-32AE-405A-9D09-F6572823315D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5260BCA9-32AE-405A-9D09-F6572823315D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5260BCA9-32AE-405A-9D09-F6572823315D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B3D6613E-2691-4332-8931-7395506E52BA}
+	EndGlobalSection
+EndGlobal
