@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Questionnaire.Domain;
+using Questionnaire.Source;
 using Questionnaire.DAL.EntityFramework.Mapping;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -18,7 +19,11 @@ namespace Questionnaire.DAL.EntityFramework
             Database.SetInitializer<QuestionnaireDbContext>(new DatabaseInitializationStrategy());
             Database.Initialize(false);
         }
+
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Set> Set { get; set; }
+        public virtual DbSet<Question> Question { get; set; }
+        public virtual DbSet<Option> Option { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder pModelBuilder)
         {

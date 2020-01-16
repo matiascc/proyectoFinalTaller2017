@@ -5,16 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Questionnaire.Source;
 
 namespace Questionnaire.Domain
 {
-    [Table("Set")]
-    public class Set
+    [Table("Question")]
+    public class Question
     {
         [Key]
         public int id { get; set; }
-        public string name { get; set; }
-        public virtual IList<Question> questions { get; set; }
+        public string question { get; set; }
+        public virtual int dificulty { get; set; }
+        public virtual int category { get; set; }
+        public virtual IList<Option> options { get; set; }
     }
 }

@@ -13,15 +13,12 @@ namespace Questionnaire.AutoMapper
     {
         public static IMapper ConfigureAutomapper()
         {
-            /*var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<User, UserDTO>().ReverseMap();
-            });
-
-            var mapper = config.CreateMapper();*/
-
             var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, UserDTO>().ReverseMap();
+                cfg.CreateMap<Set, SetDTO>().ReverseMap();
+                cfg.CreateMap<Question, QuestionDTO>().ReverseMap();
+                cfg.CreateMap<Option, OptionDTO>().ReverseMap();
             });
 
             IMapper mapper = new Mapper(configuration);

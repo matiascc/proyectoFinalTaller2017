@@ -10,12 +10,12 @@ using Questionnaire.DTOs;
 
 namespace Questionnaire.Controlers
 {
-    public class UserControler
+    public class UserController
     {
         UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
         private readonly IMapper _mapper;
 
-        public UserControler(IMapper mapper) => _mapper = mapper;
+        public UserController(IMapper mapper) => _mapper = mapper;
 
         public void AddUser(string pUsername, string pPassword, Boolean pAdmin)
         {
@@ -38,6 +38,7 @@ namespace Questionnaire.Controlers
 		public UserDTO GetUser(string username)
         {
             User user = iUOfW.UserRepository.Get(username);
+            iUOfW.Complete();
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
             return userDTO;
         }

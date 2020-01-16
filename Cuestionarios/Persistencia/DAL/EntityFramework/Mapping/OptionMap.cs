@@ -8,25 +8,24 @@ using Questionnaire.Domain;
 
 namespace Questionnaire.DAL.EntityFramework.Mapping
 {
-    class SetMap : EntityTypeConfiguration<Set>
+    class OptionMap : EntityTypeConfiguration<Option>
     {
-        public SetMap()
+        public OptionMap()
         {
-            this.ToTable("Set");
+            this.ToTable("Option");
 
             this.HasKey(b => b.id)
                 .Property(b => b.id)
                 .HasColumnName("id")
                 .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 
-            this.Property(b => b.name)
+            this.Property(b => b.answer)
                 .IsRequired()
-                .HasColumnName("name");
+                .HasColumnName("answer");
 
-            this.HasMany(b => b.questions)
-                .WithRequired()
-                .Map(pMapping => pMapping.MapKey("id"))
-                .WillCascadeOnDelete();
+            this.Property(b => b.correct)
+                .IsRequired()
+                .HasColumnName("correct");
         }
     }
 }

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Questionnaire.DTOs
 {
-    class SourceDTO
+    public class OptionDTO
     {
+        public int id { get; set; }
+        public string answer { get; set; }
+        public Boolean correct { get; set; }
     }
 }

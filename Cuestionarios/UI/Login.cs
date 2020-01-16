@@ -14,10 +14,17 @@ namespace UI
 {
     public partial class Login : Form
     {
-        private readonly UserControler _usrControler;
-        public Login(UserControler usrControler)
+        private readonly UserController _usrController;
+        private readonly SetController _setController;
+        private readonly QuestionController _questController;
+        private readonly SourceController _sourceController;
+        public Login(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController)
         {
-            _usrControler = usrControler;
+            _usrController = usrController;
+            _setController = setController;
+            _questController = questController;
+            _sourceController = sourceController;
+
             InitializeComponent();
         }
 
@@ -28,14 +35,14 @@ namespace UI
         
         private void b_login_Click(object sender, EventArgs e)
         {
-            try
-            {
-                UserDTO usr = _usrControler.GetUser(tb_username.Text);
+            //try
+            //{
+                UserDTO usr = _usrController.GetUser(tb_username.Text);
                 if(usr.password == tb_password.Text)
                 {
                     if (usr.admin)
                     {
-                        AdminMain ventana = new AdminMain();
+                        AdminMain ventana = new AdminMain(_setController, _questController, _sourceController);
                         this.Hide();
                         ventana.Show();
                     }
@@ -49,18 +56,26 @@ namespace UI
                 {
                     MessageBox.Show("Contraseña incorrecta");
                 }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Nombre de usario incorrecto", exc.Message);
-            }
+            //}
+            //catch (Exception exc)
+            //{
+            //    MessageBox.Show("Nombre de usario incorrecto", exc.Message);
+            //}
         }
 
         private void b_createUser_Click(object sender, EventArgs e)
         {
-            CreateUser ventana = new CreateUser(_usrControler);
+            CreateUser ventana = new CreateUser(_usrController, _setController, _questController, _sourceController);
             this.Hide();
             ventana.Show();
+        }
+
+        private void tb_password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.b_login_Click(this, new EventArgs());
+            }
         }
     }
 }

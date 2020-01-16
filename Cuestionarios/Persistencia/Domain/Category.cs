@@ -8,7 +8,6 @@ namespace Questionnaire.Domain
 {
     public enum Category
     {
-        AnyCategory,
 		GeneralKnowledge,
         EntertainmentBooks,
         EntertainmentFilm,
@@ -24,7 +23,7 @@ namespace Questionnaire.Domain
         Sports,
         Geography,
         History,
-        Politics, 
+        Politics,
         Art,
         Celebrities,
         Animals,

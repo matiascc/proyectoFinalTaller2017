@@ -32,7 +32,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cb_dificulty = new System.Windows.Forms.ComboBox();
-            this.tb_amount = new System.Windows.Forms.TextBox();
             this.b_loadQuestions = new System.Windows.Forms.Button();
             this.b_eraseQuestions = new System.Windows.Forms.Button();
             this.b_saveQuestions = new System.Windows.Forms.Button();
@@ -40,8 +39,8 @@
             this.cb_category = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cb_set = new System.Windows.Forms.ComboBox();
-            this.b_addSet = new System.Windows.Forms.Button();
-            this.b_deleteSet = new System.Windows.Forms.Button();
+            this.nud_amount = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_amount)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -74,22 +73,17 @@
             // cb_dificulty
             // 
             this.cb_dificulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_dificulty.Enabled = false;
             this.cb_dificulty.FormattingEnabled = true;
             this.cb_dificulty.Location = new System.Drawing.Point(88, 89);
             this.cb_dificulty.Name = "cb_dificulty";
             this.cb_dificulty.Size = new System.Drawing.Size(154, 21);
             this.cb_dificulty.TabIndex = 3;
             // 
-            // tb_amount
-            // 
-            this.tb_amount.Location = new System.Drawing.Point(88, 121);
-            this.tb_amount.Name = "tb_amount";
-            this.tb_amount.Size = new System.Drawing.Size(154, 20);
-            this.tb_amount.TabIndex = 5;
-            // 
             // b_loadQuestions
             // 
-            this.b_loadQuestions.Location = new System.Drawing.Point(67, 164);
+            this.b_loadQuestions.Enabled = false;
+            this.b_loadQuestions.Location = new System.Drawing.Point(84, 175);
             this.b_loadQuestions.Name = "b_loadQuestions";
             this.b_loadQuestions.Size = new System.Drawing.Size(76, 36);
             this.b_loadQuestions.TabIndex = 6;
@@ -99,7 +93,7 @@
             // 
             // b_eraseQuestions
             // 
-            this.b_eraseQuestions.Location = new System.Drawing.Point(270, 164);
+            this.b_eraseQuestions.Location = new System.Drawing.Point(166, 175);
             this.b_eraseQuestions.Name = "b_eraseQuestions";
             this.b_eraseQuestions.Size = new System.Drawing.Size(76, 36);
             this.b_eraseQuestions.TabIndex = 7;
@@ -109,7 +103,8 @@
             // 
             // b_saveQuestions
             // 
-            this.b_saveQuestions.Location = new System.Drawing.Point(166, 164);
+            this.b_saveQuestions.Enabled = false;
+            this.b_saveQuestions.Location = new System.Drawing.Point(122, 243);
             this.b_saveQuestions.Name = "b_saveQuestions";
             this.b_saveQuestions.Size = new System.Drawing.Size(76, 36);
             this.b_saveQuestions.TabIndex = 8;
@@ -120,15 +115,16 @@
             // tabla
             // 
             this.tabla.HideSelection = false;
-            this.tabla.Location = new System.Drawing.Point(384, 57);
+            this.tabla.Location = new System.Drawing.Point(284, 27);
             this.tabla.Name = "tabla";
-            this.tabla.Size = new System.Drawing.Size(310, 236);
+            this.tabla.Size = new System.Drawing.Size(345, 226);
             this.tabla.TabIndex = 9;
             this.tabla.UseCompatibleStateImageBehavior = false;
             // 
             // cb_category
             // 
             this.cb_category.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_category.Enabled = false;
             this.cb_category.Location = new System.Drawing.Point(88, 57);
             this.cb_category.Name = "cb_category";
             this.cb_category.Size = new System.Drawing.Size(154, 21);
@@ -151,32 +147,22 @@
             this.cb_set.Name = "cb_set";
             this.cb_set.Size = new System.Drawing.Size(154, 21);
             this.cb_set.TabIndex = 12;
+            this.cb_set.SelectedIndexChanged += new System.EventHandler(this.cb_setChanged);
             // 
-            // b_addSet
+            // nud_amount
             // 
-            this.b_addSet.Location = new System.Drawing.Point(372, 25);
-            this.b_addSet.Name = "b_addSet";
-            this.b_addSet.Size = new System.Drawing.Size(75, 23);
-            this.b_addSet.TabIndex = 13;
-            this.b_addSet.Text = "Add Set";
-            this.b_addSet.UseVisualStyleBackColor = true;
-            // 
-            // b_deleteSet
-            // 
-            this.b_deleteSet.Location = new System.Drawing.Point(271, 25);
-            this.b_deleteSet.Name = "b_deleteSet";
-            this.b_deleteSet.Size = new System.Drawing.Size(75, 23);
-            this.b_deleteSet.TabIndex = 14;
-            this.b_deleteSet.Text = "Delete Set";
-            this.b_deleteSet.UseVisualStyleBackColor = true;
+            this.nud_amount.Enabled = false;
+            this.nud_amount.Location = new System.Drawing.Point(88, 122);
+            this.nud_amount.Name = "nud_amount";
+            this.nud_amount.Size = new System.Drawing.Size(154, 20);
+            this.nud_amount.TabIndex = 13;
             // 
             // AdminMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(706, 307);
-            this.Controls.Add(this.b_deleteSet);
-            this.Controls.Add(this.b_addSet);
+            this.ClientSize = new System.Drawing.Size(675, 291);
+            this.Controls.Add(this.nud_amount);
             this.Controls.Add(this.cb_set);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cb_category);
@@ -184,13 +170,13 @@
             this.Controls.Add(this.b_saveQuestions);
             this.Controls.Add(this.b_eraseQuestions);
             this.Controls.Add(this.b_loadQuestions);
-            this.Controls.Add(this.tb_amount);
             this.Controls.Add(this.cb_dificulty);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "AdminMain";
             this.Text = "AdminMain";
+            ((System.ComponentModel.ISupportInitialize)(this.nud_amount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,7 +188,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cb_dificulty;
-        private System.Windows.Forms.TextBox tb_amount;
         private System.Windows.Forms.Button b_loadQuestions;
         private System.Windows.Forms.Button b_eraseQuestions;
         private System.Windows.Forms.Button b_saveQuestions;
@@ -210,7 +195,6 @@
         private System.Windows.Forms.ComboBox cb_category;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cb_set;
-        private System.Windows.Forms.Button b_addSet;
-        private System.Windows.Forms.Button b_deleteSet;
+        private System.Windows.Forms.NumericUpDown nud_amount;
     }
 }

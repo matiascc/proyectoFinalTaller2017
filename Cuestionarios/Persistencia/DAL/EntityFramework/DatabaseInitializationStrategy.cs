@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using Questionnaire.Domain;
+using Questionnaire.Source;
 
 namespace Questionnaire.DAL.EntityFramework
 {
-    public class DatabaseInitializationStrategy : CreateDatabaseIfNotExists<QuestionnaireDbContext>  
+    public class DatabaseInitializationStrategy : DropCreateDatabaseIfModelChanges<QuestionnaireDbContext>  
     {
         protected override void Seed(QuestionnaireDbContext context)
         {
@@ -19,6 +20,12 @@ namespace Questionnaire.DAL.EntityFramework
                 password = "admin",
                 admin = true
             });
+
+            context.Set.Add(new Set
+            {
+                name = "opentdb"
+            });
+
             context.SaveChanges();
 
             base.Seed(context);

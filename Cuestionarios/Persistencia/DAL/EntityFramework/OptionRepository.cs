@@ -7,11 +7,11 @@ using Questionnaire.Domain;
 
 namespace Questionnaire.DAL.EntityFramework
 {
-    class SetRepository : Repository<Set, QuestionnaireDbContext>, ISetRepository
+    class OptionRepository : Repository<Option, QuestionnaireDbContext>, IOptionRepository
     {
-        public SetRepository(QuestionnaireDbContext pContext) : base(pContext)
+        public OptionRepository(QuestionnaireDbContext pContext) : base(pContext)
         {
-            
+
         }
     }
 }

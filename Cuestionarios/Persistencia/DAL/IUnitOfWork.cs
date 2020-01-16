@@ -10,5 +10,8 @@ namespace Questionnaire.DAL
     {
         void Complete();
         IUserRepository UserRepository { get; }
+        ISetRepository SetRepository { get; }
+        IQuestionRepository QuestionRepository { get; }
+        IOptionRepository OptionRepository { get; }
     }
 }

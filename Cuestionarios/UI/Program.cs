@@ -20,8 +20,13 @@ namespace UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             IMapper mapper = Questionnaire.AutoMapper.AutoMapper.ConfigureAutomapper(); 
-            UserControler usrControler = new UserControler(mapper);
-            Application.Run(new Login(usrControler));
+
+            UserController usrController = new UserController(mapper);
+            SetController setController = new SetController(mapper);
+            QuestionController questController = new QuestionController(mapper,setController);
+            SourceController sourceController = new SourceController(mapper);
+
+            Application.Run(new Login(usrController, setController, questController, sourceController));
         }
     }
 }

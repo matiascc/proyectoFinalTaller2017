@@ -13,11 +13,18 @@ namespace UI
 {
     public partial class CreateUser : Form
     {
-        private readonly UserControler _usrControler;
+        private readonly UserController _usrController;
+        private readonly SetController _setController;
+        private readonly QuestionController _questController;
+        private readonly SourceController _sourceController;
 
-        public CreateUser(UserControler usrControler)
+        public CreateUser(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController)
         {
-            _usrControler = usrControler;
+            _usrController = usrController;
+            _setController = setController;
+            _questController = questController;
+            _sourceController = sourceController;
+
             InitializeComponent();
         }
 
@@ -25,9 +32,9 @@ namespace UI
         {
             try
             {
-                _usrControler.AddUser(tb_username.Text, tb_password.Text, false);
+                _usrController.AddUser(tb_username.Text, tb_password.Text, false);
                 MessageBox.Show("Usuario agregado correctamente");
-                Login ventana = new Login(_usrControler);
+                Login ventana = new Login(_usrController, _setController, _questController, _sourceController);
                 this.Hide();
                 ventana.Show();
             }

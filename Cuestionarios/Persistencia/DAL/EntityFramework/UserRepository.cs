@@ -14,11 +14,6 @@ namespace Questionnaire.DAL.EntityFramework
         {
            
         }
-        /// <summary>
-        /// Obtiene la entidad por Id
-        /// </summary>
-        /// <param name="pId">Identificador de la entidad</param>
-        /// <returns>Entidad</returns>
         public User Get(string pId)
         {
             return this.iDbContext.Set<User>().Find(pId);
