@@ -15,5 +15,7 @@ namespace Questionnaire.Domain
         public int id { get; set; }
         public string answer { get; set; }
         public Boolean correct { get; set; }
+        public virtual int questionID { get; set; }
+        public virtual Question question { get; set; }
     }
 }

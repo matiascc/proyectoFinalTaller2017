@@ -8,6 +8,7 @@ namespace Questionnaire.Domain
 {
     public enum Category
     {
+        AnyCategory,
 		GeneralKnowledge,
         EntertainmentBooks,
         EntertainmentFilm,

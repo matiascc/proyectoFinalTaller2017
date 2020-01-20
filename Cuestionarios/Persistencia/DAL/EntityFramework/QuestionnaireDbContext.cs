@@ -21,13 +21,16 @@ namespace Questionnaire.DAL.EntityFramework
         }
 
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<Set> Set { get; set; }
+        public virtual DbSet<Set> Sets { get; set; }
         public virtual DbSet<Question> Question { get; set; }
-        public virtual DbSet<Option> Option { get; set; }
+        public virtual DbSet<Option> Options { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder pModelBuilder)
         {
             pModelBuilder.Configurations.Add(new UserMap());
+            pModelBuilder.Configurations.Add(new OptionMap());
+            pModelBuilder.Configurations.Add(new SetMap());
+            pModelBuilder.Configurations.Add(new QuestionMap());
 
             base.OnModelCreating(pModelBuilder);
         }

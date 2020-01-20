@@ -32,8 +32,8 @@ namespace Questionnaire.Controlers
 
         public SetDTO GetSetByName(string pName)
         {
-            List<SetDTO> listSet = this.GetAllSet();
-            return(listSet.Find(s => s.name.ToString() == pName));
+            return _mapper.Map<Set, SetDTO>(iUOfW.SetRepository.GetSetByName(pName)); ;
         }
+
     }
 }

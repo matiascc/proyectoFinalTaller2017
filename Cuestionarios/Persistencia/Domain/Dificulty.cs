@@ -8,6 +8,7 @@ namespace Questionnaire.Domain
 {
     public enum Dificulty
     {
+        AnyDificulty,
         Easy,
         Medium,
         High

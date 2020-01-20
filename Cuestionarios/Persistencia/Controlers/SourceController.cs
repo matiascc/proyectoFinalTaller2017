@@ -13,13 +13,10 @@ namespace Questionnaire.Controlers
 {
     public class SourceController
     {
-        UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
-        private readonly IMapper _mapper;
         public List<ISource> sourcesList { get; set; }
 
-        public SourceController(IMapper mapper)
+        public SourceController()
         {
-            _mapper = mapper;
             sourcesList = new List<ISource>();
             this.sourcesList.Add(new OpentdbSource());
         }

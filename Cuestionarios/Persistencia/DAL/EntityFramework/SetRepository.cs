@@ -13,5 +13,18 @@ namespace Questionnaire.DAL.EntityFramework
         {
             
         }
+
+        public Set GetSetByName(string pName)
+        {
+            return iDbContext.Sets.Where(s => s.name == pName).Single();
+        }
+
+        public void AddQuestion(Question pQuestion) 
+        {
+            iDbContext.Question.Attach(pQuestion);
+            iDbContext.Question.Add(pQuestion);
+
+            iDbContext.SaveChanges();
+        }
     }
 }

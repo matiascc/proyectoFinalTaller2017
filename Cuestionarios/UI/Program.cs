@@ -24,7 +24,7 @@ namespace UI
             UserController usrController = new UserController(mapper);
             SetController setController = new SetController(mapper);
             QuestionController questController = new QuestionController(mapper,setController);
-            SourceController sourceController = new SourceController(mapper);
+            SourceController sourceController = new SourceController();
 
             Application.Run(new Login(usrController, setController, questController, sourceController));
         }

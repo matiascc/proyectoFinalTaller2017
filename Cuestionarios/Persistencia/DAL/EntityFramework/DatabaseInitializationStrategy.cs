@@ -9,7 +9,7 @@ using Questionnaire.Source;
 
 namespace Questionnaire.DAL.EntityFramework
 {
-    public class DatabaseInitializationStrategy : DropCreateDatabaseIfModelChanges<QuestionnaireDbContext>  
+    public class DatabaseInitializationStrategy : DropCreateDatabaseAlways<QuestionnaireDbContext>  
     {
         protected override void Seed(QuestionnaireDbContext context)
         {
@@ -21,7 +21,7 @@ namespace Questionnaire.DAL.EntityFramework
                 admin = true
             });
 
-            context.Set.Add(new Set
+            context.Sets.Add(new Set
             {
                 name = "opentdb"
             });

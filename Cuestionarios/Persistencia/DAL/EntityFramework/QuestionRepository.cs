@@ -13,5 +13,12 @@ namespace Questionnaire.DAL.EntityFramework
         {
 
         }
+        public void AddOption(Option pOption)
+        {
+            iDbContext.Options.Attach(pOption);
+            iDbContext.Options.Add(pOption);
+
+            iDbContext.SaveChanges();
+        }
     }
 }

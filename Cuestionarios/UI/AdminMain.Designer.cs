@@ -34,8 +34,6 @@
             this.cb_dificulty = new System.Windows.Forms.ComboBox();
             this.b_loadQuestions = new System.Windows.Forms.Button();
             this.b_eraseQuestions = new System.Windows.Forms.Button();
-            this.b_saveQuestions = new System.Windows.Forms.Button();
-            this.tabla = new System.Windows.Forms.ListView();
             this.cb_category = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cb_set = new System.Windows.Forms.ComboBox();
@@ -93,6 +91,7 @@
             // 
             // b_eraseQuestions
             // 
+            this.b_eraseQuestions.Enabled = false;
             this.b_eraseQuestions.Location = new System.Drawing.Point(166, 175);
             this.b_eraseQuestions.Name = "b_eraseQuestions";
             this.b_eraseQuestions.Size = new System.Drawing.Size(76, 36);
@@ -100,26 +99,6 @@
             this.b_eraseQuestions.Text = "Erase Questions";
             this.b_eraseQuestions.UseVisualStyleBackColor = true;
             this.b_eraseQuestions.Click += new System.EventHandler(this.b_eraseQuestions_Click);
-            // 
-            // b_saveQuestions
-            // 
-            this.b_saveQuestions.Enabled = false;
-            this.b_saveQuestions.Location = new System.Drawing.Point(122, 243);
-            this.b_saveQuestions.Name = "b_saveQuestions";
-            this.b_saveQuestions.Size = new System.Drawing.Size(76, 36);
-            this.b_saveQuestions.TabIndex = 8;
-            this.b_saveQuestions.Text = "Save Questions";
-            this.b_saveQuestions.UseVisualStyleBackColor = true;
-            this.b_saveQuestions.Click += new System.EventHandler(this.b_saveQuestions_Click);
-            // 
-            // tabla
-            // 
-            this.tabla.HideSelection = false;
-            this.tabla.Location = new System.Drawing.Point(284, 27);
-            this.tabla.Name = "tabla";
-            this.tabla.Size = new System.Drawing.Size(345, 226);
-            this.tabla.TabIndex = 9;
-            this.tabla.UseCompatibleStateImageBehavior = false;
             // 
             // cb_category
             // 
@@ -161,13 +140,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 291);
+            this.ClientSize = new System.Drawing.Size(291, 257);
             this.Controls.Add(this.nud_amount);
             this.Controls.Add(this.cb_set);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cb_category);
-            this.Controls.Add(this.tabla);
-            this.Controls.Add(this.b_saveQuestions);
             this.Controls.Add(this.b_eraseQuestions);
             this.Controls.Add(this.b_loadQuestions);
             this.Controls.Add(this.cb_dificulty);
@@ -190,8 +167,6 @@
         private System.Windows.Forms.ComboBox cb_dificulty;
         private System.Windows.Forms.Button b_loadQuestions;
         private System.Windows.Forms.Button b_eraseQuestions;
-        private System.Windows.Forms.Button b_saveQuestions;
-        private System.Windows.Forms.ListView tabla;
         private System.Windows.Forms.ComboBox cb_category;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cb_set;

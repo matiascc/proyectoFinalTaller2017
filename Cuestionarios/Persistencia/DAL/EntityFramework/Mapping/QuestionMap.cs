@@ -31,11 +31,24 @@ namespace Questionnaire.DAL.EntityFramework.Mapping
                 .IsRequired()
                 .HasColumnName("category");
 
-            this.HasMany(b => b.options)
+            /*this.HasRequired(b => b.set)
+                .WithMany(b => b.questions)
+                .HasForeignKey(b => b.setID);*/
+
+            /*this.HasMany(b => b.options)
                 .WithRequired()
                 .Map(pMapping => pMapping.MapKey("id"))
+                .WillCascadeOnDelete();*/
+
+            this.HasMany<Option>(b => b.options)
+                .WithRequired(b => b.question)
+                .HasForeignKey<int>(b => b.questionID)
                 .WillCascadeOnDelete();
 
+            /*this.HasMany<Option>(C => C.options)
+                .WithRequired(I => I.question)
+                .Map(pMapping => pMapping.MapKey("questionId"))
+                .WillCascadeOnDelete();*/
         }
     }
 }

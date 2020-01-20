@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Questionnaire.Domain;
 using Questionnaire.Controlers;
+using Questionnaire.DTOs;
 using Questionnaire.Source;
 
 namespace UI
@@ -43,7 +44,9 @@ namespace UI
             cb_dificulty.Enabled = true;
             nud_amount.Enabled = true;
             b_loadQuestions.Enabled = true;
-            b_saveQuestions.Enabled = true;
+            b_eraseQuestions.Enabled = true;
+
+            cb_category.Items.Clear();
 
             foreach (string item in Enum.GetNames(typeof(Category)))
             {
@@ -57,14 +60,9 @@ namespace UI
             _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.SelectedIndex, Decimal.ToInt32(nud_amount.Value));
         }
 
-        private void b_saveQuestions_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void b_eraseQuestions_Click(object sender, EventArgs e)
         {
-
+            _questionController.DeleteQuestions();
         }
     }
 }

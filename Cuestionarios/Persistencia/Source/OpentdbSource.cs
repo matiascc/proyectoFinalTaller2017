@@ -23,7 +23,25 @@ namespace Questionnaire.Source
 
         public List<Question> GetQuestions(string pDificulty, int pCategory, int pAmount)
         {
-            this.Url = "https://opentdb.com/api.php?" + "amount=" + pAmount + "&category=" + pCategory+9 + "&difficulty=" + pDificulty.ToLower() + "&type=multiple";
+            string category, dificulty;
+            if (pCategory == 0)
+            {
+                category = "";
+            }
+            else
+            {
+                category = "&category=" + pCategory + 9;
+            }
+            if (pDificulty == "AnyDificulty")
+            {
+                dificulty = "";
+            }
+            else
+            {
+                dificulty = "&difficulty=" + pDificulty.ToLower();
+            }
+            
+            this.Url = "https://opentdb.com/api.php?" + "amount=" + pAmount + category + dificulty + "&type=multiple";
 
             List<Question> questionsList = new List<Question>();
 
@@ -71,7 +89,7 @@ namespace Questionnaire.Source
                         questionsList.Add(new Question
                         {
                             question = bResponseItem.question,
-                            dificulty = (int)Enum.Parse(typeof(Dificulty), pDificulty),
+                            dificulty =  (int)Enum.Parse(typeof(Dificulty), pDificulty),
                             category = pCategory,
                             options = optionList
                         });

@@ -19,14 +19,23 @@ namespace Questionnaire.DAL.EntityFramework.Mapping
                 .HasColumnName("id")
                 .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 
+            /*this.HasIndex(b => b.name)
+                .IsUnique()
+                .HasName("name");*/
+
             this.Property(b => b.name)
                 .IsRequired()
                 .HasColumnName("name");
 
-            this.HasMany(b => b.questions)
+            this.HasMany<Question>(b => b.questions)
                 .WithRequired()
-                .Map(pMapping => pMapping.MapKey("id"))
+                .HasForeignKey<int>(b => b.setID)
                 .WillCascadeOnDelete();
+
+            /*this.HasMany<Question>(C => C.questions)
+                .WithRequired(I => I.set)
+                .Map(pMapping => pMapping.MapKey("setId"))
+                .WillCascadeOnDelete();*/
         }
     }
 }
