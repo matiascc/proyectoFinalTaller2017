@@ -15,6 +15,5 @@ namespace Questionnaire.DTOs
         public virtual int category { get; set; }
         public virtual IList<Option> options { get; set; }
         public virtual int setID { get; set; }
-        //public virtual Set set { get; set; }
     }
 }

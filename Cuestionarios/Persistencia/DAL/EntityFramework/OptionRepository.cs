@@ -13,13 +13,6 @@ namespace Questionnaire.DAL.EntityFramework
         {
 
         }
-
-        public int GetLastIndex()
-        {
-            List<Option> listOptions = (from i in iDbContext.Options select i).ToList();
-            return listOptions.Count;
-        }
-
         
     }
 }

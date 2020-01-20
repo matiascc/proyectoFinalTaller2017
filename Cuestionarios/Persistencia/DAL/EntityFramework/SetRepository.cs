@@ -23,7 +23,6 @@ namespace Questionnaire.DAL.EntityFramework
         {
             iDbContext.Question.Attach(pQuestion);
             iDbContext.Question.Add(pQuestion);
-
             iDbContext.SaveChanges();
         }
     }

@@ -17,7 +17,6 @@ namespace Questionnaire.DAL.EntityFramework
         {
             iDbContext.Options.Attach(pOption);
             iDbContext.Options.Add(pOption);
-
             iDbContext.SaveChanges();
         }
     }

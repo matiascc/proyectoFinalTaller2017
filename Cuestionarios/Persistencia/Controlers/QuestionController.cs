@@ -40,9 +40,10 @@ namespace Questionnaire.Controlers
                         optionsList.Add(opt);
                     }
                     question.options.Clear();
-                    //question.set = set;
+
                     question.setID = set.id;
                     iUOfW.SetRepository.AddQuestion(question);
+
                     foreach (Option option in optionsList)
                     {
                         option.question = question;

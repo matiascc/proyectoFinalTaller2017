@@ -23,7 +23,7 @@ namespace Questionnaire.DAL.EntityFramework.Mapping
                 .IsRequired()
                 .HasColumnName("question");
 
-            this.Property(b => b.dificulty)
+            this.Property(b => b.difficulty)
                 .IsRequired()
                 .HasColumnName("dificulty");
 
@@ -31,24 +31,10 @@ namespace Questionnaire.DAL.EntityFramework.Mapping
                 .IsRequired()
                 .HasColumnName("category");
 
-            /*this.HasRequired(b => b.set)
-                .WithMany(b => b.questions)
-                .HasForeignKey(b => b.setID);*/
-
-            /*this.HasMany(b => b.options)
-                .WithRequired()
-                .Map(pMapping => pMapping.MapKey("id"))
-                .WillCascadeOnDelete();*/
-
             this.HasMany<Option>(b => b.options)
                 .WithRequired(b => b.question)
                 .HasForeignKey<int>(b => b.questionID)
                 .WillCascadeOnDelete();
-
-            /*this.HasMany<Option>(C => C.options)
-                .WithRequired(I => I.question)
-                .Map(pMapping => pMapping.MapKey("questionId"))
-                .WillCascadeOnDelete();*/
         }
     }
 }

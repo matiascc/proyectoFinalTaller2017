@@ -19,6 +19,7 @@ namespace UI
         private readonly SetController _setControler; 
         private readonly QuestionController _questionController;
         private readonly SourceController _sourceControler;
+        private ISource sourceSelected;
 
         public AdminMain(SetController setControler, QuestionController questionController, SourceController sourceControler)
         {
@@ -32,10 +33,6 @@ namespace UI
                 cb_set.Items.Add(item.name.ToString());
             }
 
-            foreach (var item in Enum.GetValues(typeof(Dificulty)))
-            {
-                cb_dificulty.Items.Add(item.ToString());
-            }
         }
 
         private void cb_setChanged(object sender, EventArgs e)
@@ -48,15 +45,21 @@ namespace UI
 
             cb_category.Items.Clear();
 
-            foreach (string item in Enum.GetNames(typeof(Category)))
+            this.sourceSelected = _sourceControler.GetSourceByName(cb_set.Text);
+
+            foreach (string name in sourceSelected.categoryDictionary.Values)
             {
-                cb_category.Items.Add(item);
+                cb_category.Items.Add(name);
+            }
+
+            foreach (string name in sourceSelected.difficultyDictionary.Values)
+            {
+                cb_dificulty.Items.Add(name);
             }
         }
 
         private void b_loadQuestions_Click(object sender, EventArgs e)
         {
-            ISource sourceSelected = _sourceControler.GetSourceByName(cb_set.Text); 
             _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.SelectedIndex, Decimal.ToInt32(nud_amount.Value));
         }
 

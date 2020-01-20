@@ -9,7 +9,6 @@ namespace Questionnaire.DAL
 {
     public interface IQuestionRepository : IRepository<Question>
     {
-
         void AddOption(Option pOption);
     }
 }

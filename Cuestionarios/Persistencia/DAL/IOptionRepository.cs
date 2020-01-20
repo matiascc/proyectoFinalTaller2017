@@ -9,6 +9,5 @@ namespace Questionnaire.DAL
 {
     public interface IOptionRepository : IRepository<Option>
     {
-        int GetLastIndex();
     }
 }

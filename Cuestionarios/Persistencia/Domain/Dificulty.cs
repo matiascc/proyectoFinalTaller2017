@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Questionnaire.Domain
 {
-    public enum Dificulty
+    public class Dificulty
     {
-        AnyDificulty,
-        Easy,
-        Medium,
-        High
+        public Dictionary<int, string> dificulty { get; set; }
+
+        public void LoadCategories(Dictionary<int, string> pDictionary)
+        {
+            dificulty.Clear();
+            dificulty = pDictionary;
+        }
     }
 }
