@@ -62,7 +62,7 @@
             this.b_register.TabIndex = 2;
             this.b_register.Text = "Register";
             this.b_register.UseVisualStyleBackColor = true;
-            this.b_register.Click += new System.EventHandler(this.button1_Click);
+            this.b_register.Click += new System.EventHandler(this.b_register_Click);
             // 
             // tb_username
             // 

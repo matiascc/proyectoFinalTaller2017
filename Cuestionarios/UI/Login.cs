@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
 using Questionnaire.DTOs;
@@ -30,20 +23,19 @@ namespace UI
 
         private void Login_Load(object sender, EventArgs e)
         {
-
         }
         
         private void b_login_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 UserDTO usr = _usrController.GetUser(tb_username.Text);
-                if(usr.password == tb_password.Text)
+                if(usr.Password == tb_password.Text)
                 {
-                    if (usr.admin)
+                    if (usr.Admin)
                     {
-                        AdminMain ventana = new AdminMain(_setController, _questController, _sourceController);
-                        this.Hide();
+                        AdminMain ventana = new AdminMain(_setController, _questController, _sourceController, _usrController);
+                        this.Close();
                         ventana.Show();
                     }
                     else
@@ -56,20 +48,22 @@ namespace UI
                 {
                     MessageBox.Show("Contraseña incorrecta");
                 }
-            //}
-            //catch (Exception exc)
-            //{
-            //    MessageBox.Show("Nombre de usario incorrecto", exc.Message);
-            //}
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Nombre de usario incorrecto", exc.Message);
+            }
         }
 
         private void b_createUser_Click(object sender, EventArgs e)
         {
-            CreateUser ventana = new CreateUser(_usrController, _setController, _questController, _sourceController);
-            this.Hide();
-            ventana.Show();
+            CreateUser ventana = new CreateUser(_usrController);
+            ventana.ShowDialog();
         }
 
+        /// <summary>
+        /// Try to login when the Enter Key is pressed
+        /// </summary>
         private void tb_password_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

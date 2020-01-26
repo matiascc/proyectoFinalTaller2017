@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Questionnaire.DAL.EntityFramework;
 using Questionnaire.Domain;
@@ -12,33 +8,36 @@ namespace Questionnaire.Controlers
 {
     public class UserController
     {
-        UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
+        readonly UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
         private readonly IMapper _mapper;
 
         public UserController(IMapper mapper) => _mapper = mapper;
 
         public void AddUser(string pUsername, string pPassword, Boolean pAdmin)
         {
-            UserDTO usrDTO = new UserDTO();
-            usrDTO.username = pUsername;
-            usrDTO.password = pPassword;
-            usrDTO.admin = pAdmin;
-
-            User MapUser = _mapper.Map<UserDTO, User>(usrDTO);
-
-            iUOfW.UserRepository.Add(MapUser);
-            iUOfW.Complete();
+            User usr = new User
+            {
+                Username = pUsername,
+                Password = pPassword,
+                Admin = pAdmin
+            };
+            if (iUOfW.UserRepository.GetByUserName(pUsername) == null)
+            {
+                iUOfW.UserRepository.Add(usr);
+                iUOfW.Complete();
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         /// <summary>
-		/// Devuelve una campaña a partir de un ID ingresado
-		/// </summary>
-		/// <param name="pId"></param>
-		/// <returns></returns>
+        /// Returns an user by his username
+        /// </summary>
 		public UserDTO GetUser(string username)
         {
-            User user = iUOfW.UserRepository.Get(username);
-            iUOfW.Complete();
+            User user = iUOfW.UserRepository.GetByUserName(username);
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
             return userDTO;
         }

@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 using System.Net;
-using System.Web;
 using Questionnaire.Domain;
 
 namespace Questionnaire.Source
@@ -19,7 +17,7 @@ namespace Questionnaire.Source
         public Dictionary<int, string> difficultyDictionary { get; private set; }
         public OpentdbSource()
         {
-            this.Url = "https://opentdb.com/api.php?";   //opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
+            this.Url = "https://opentdb.com/api.php?";   //Url example: opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
             this.Name = "opentdb";
             this.categoryDictionary = GetCategories();
             this.difficultyDictionary = new Dictionary<int, string>()
@@ -31,8 +29,12 @@ namespace Questionnaire.Source
                                             }; ;
         }
 
+        /// <summary>
+        /// Get Questions
+        /// </summary>
         public List<Question> GetQuestions(string pDificulty, int pCategory, int pAmount)
         {
+            //Creates the url
             string category, dificulty;
             if (pCategory == 0)
             {
@@ -50,77 +52,45 @@ namespace Questionnaire.Source
             {
                 dificulty = "&difficulty=" + pDificulty.ToLower();
             }
-
             this.Url = "https://opentdb.com/api.php?" + "amount=" + pAmount + category + dificulty + "&type=multiple";
+
+            dynamic mResponseJSON = CallTheQuestionAPI(this.Url);
+
+            if (mResponseJSON == null)
+            {
+                throw new ArgumentNullException(nameof(mResponseJSON));
+            }
 
             List<Question> questionsList = new List<Question>();
 
-            // Establecimiento del protocolo ssl de transporte
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            // Se crea el request http
-            HttpWebRequest mRequest = (HttpWebRequest)WebRequest.Create(Url);
-
-            try
+            foreach (var bResponseItem in mResponseJSON.results)
             {
-                // Se ejecuta la consulta
-                WebResponse mResponse = mRequest.GetResponse();
-
-                // Se obtiene los datos de respuesta
-                using (Stream responseStream = mResponse.GetResponseStream())
+                List<Option> optionList = new List<Option>();
+                        
+                //Mark the correct answer
+                optionList.Add(new Option
                 {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    Answer = bResponseItem.correct_answer,
+                    Correct = true
+                });
 
-                    // Se parsea la respuesta y se serializa a JSON a un objeto dynamic
-                    dynamic mResponseJSON = JsonConvert.DeserializeObject(reader.ReadToEnd());
-
-                    System.Console.WriteLine("Código de respuesta: {0}", mResponseJSON.response_code);
-
-                    // Se iteran cada uno de los resultados.
-                    foreach (var bResponseItem in mResponseJSON.results)
+                //Adds the other answers
+                foreach (var opt in bResponseItem.incorrect_answers)
+                {
+                    optionList.Add(new Option
                     {
-                        List<Option> optionList = new List<Option>();
-
-                        optionList.Add(new Option
-                        {
-                            answer = bResponseItem.correct_answer,
-                            correct = true
-                        });
-
-                        foreach (var opt in bResponseItem.incorrect_answers)
-                        {
-                            optionList.Add(new Option
-                            {
-                                answer = opt,
-                                correct = false
-                            });
-                        }
-
-                        questionsList.Add(new Question
-                        {
-                            question = bResponseItem.question,
-                            difficulty = difficultyDictionary.FirstOrDefault(x => x.Value == bResponseItem.difficulty.ToString()).Key,
-                            category = categoryDictionary.FirstOrDefault(x => x.Value == bResponseItem.category.ToString()).Key,
-                            options = optionList
-                        });
-
-                    }
+                        Answer = opt,
+                        Correct = false
+                    });
                 }
-            }
-            catch (WebException ex)
-            {
-                WebResponse mErrorResponse = ex.Response;
-                using (Stream mResponseStream = mErrorResponse.GetResponseStream())
+
+                questionsList.Add(new Question
                 {
-                    StreamReader mReader = new StreamReader(mResponseStream, Encoding.GetEncoding("utf-8"));
-                    String mErrorText = mReader.ReadToEnd();
-
-                    System.Console.WriteLine("Error: {0}", mErrorText);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine("Error: {0}", ex.Message);
+                    QuestionSentence = bResponseItem.question,
+                    Difficulty = difficultyDictionary.FirstOrDefault(x => x.Value == bResponseItem.difficulty.ToString()).Key,
+                    Category = categoryDictionary.FirstOrDefault(x => x.Value == bResponseItem.category.ToString()).Key,
+                    Options = optionList
+                });
             }
 
             return (questionsList);
@@ -128,39 +98,54 @@ namespace Questionnaire.Source
 
         private Dictionary<int, string> GetCategories()
         {
-            Dictionary<int, string> categoriesDictionary = new Dictionary<int, string>();
-            categoriesDictionary.Add(0, "Any Category");
-
             this.Url = "https://opentdb.com/api_category.php";
 
-            // Establecimiento del protocolo ssl de transporte
+            dynamic mResponseJSON = CallTheQuestionAPI(this.Url);
+
+            Dictionary<int, string> categoriesDictionary = new Dictionary<int, string>
+            {
+                { 0, "Any Category" }
+            };
+
+            //Each of the results is iterated
+            foreach (var category in mResponseJSON.trivia_categories)
+            {
+                int id = category.id;
+                string name = category.name;
+                categoriesDictionary.Add(id, name);
+            }
+
+            return (categoriesDictionary);
+
+        }
+
+        /// <summary>
+        /// Gets a response form the URL
+        /// </summary>
+        private dynamic CallTheQuestionAPI(string pUrl)
+        {
+            // Establishment of the transport ssl protocol
             System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            // Se crea el request http
-            HttpWebRequest mRequest = (HttpWebRequest)WebRequest.Create(Url);
+            // The request http is created
+            HttpWebRequest mRequest = (HttpWebRequest)WebRequest.Create(pUrl);
 
             try
             {
-                // Se ejecuta la consulta
+                // The query is executed
                 WebResponse mResponse = mRequest.GetResponse();
 
-                // Se obtiene los datos de respuesta
+                // The response data is obtained
                 using (Stream responseStream = mResponse.GetResponseStream())
                 {
                     StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
 
-                    // Se parsea la respuesta y se serializa a JSON a un objeto dynamic
+                    // The response is parsed and JSON is serialized to a dynamic object
                     dynamic mResponseJSON = JsonConvert.DeserializeObject(reader.ReadToEnd());
 
                     System.Console.WriteLine("Código de respuesta: {0}", mResponseJSON.response_code);
 
-                    // Se iteran cada uno de los resultados.
-                    foreach (var category in mResponseJSON.trivia_categories)
-                    {
-                        int id = category.id;
-                        string name = category.name;
-                        categoriesDictionary.Add(id, name);
-                    }
+                    return mResponseJSON;
                 }
             }
             catch (WebException ex)
@@ -172,14 +157,14 @@ namespace Questionnaire.Source
                     String mErrorText = mReader.ReadToEnd();
 
                     System.Console.WriteLine("Error: {0}", mErrorText);
+                    return null;
                 }
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine("Error: {0}", ex.Message);
+                return null;
             }
-
-            return (categoriesDictionary);
         }
     }
 }

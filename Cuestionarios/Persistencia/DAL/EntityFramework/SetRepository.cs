@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Questionnaire.Domain;
 
 namespace Questionnaire.DAL.EntityFramework
@@ -11,14 +7,19 @@ namespace Questionnaire.DAL.EntityFramework
     {
         public SetRepository(QuestionnaireDbContext pContext) : base(pContext)
         {
-            
         }
 
+        /// <summary>
+        /// Returns a set by the name parameter
+        /// </summary>
         public Set GetSetByName(string pName)
         {
-            return iDbContext.Sets.Where(s => s.name == pName).Single();
+            return iDbContext.Sets.Where(s => s.Name == pName).Single();
         }
 
+        /// <summary>
+        /// Adds a question to the database
+        /// </summary>
         public void AddQuestion(Question pQuestion) 
         {
             iDbContext.Question.Attach(pQuestion);

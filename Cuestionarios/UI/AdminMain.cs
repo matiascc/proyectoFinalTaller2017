@@ -1,40 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Questionnaire.Domain;
 using Questionnaire.Controlers;
-using Questionnaire.DTOs;
 using Questionnaire.Source;
 
 namespace UI
 {
     public partial class AdminMain : Form
     {
-        private readonly SetController _setControler; 
+        private readonly SetController _setController; 
         private readonly QuestionController _questionController;
-        private readonly SourceController _sourceControler;
+        private readonly SourceController _sourceController;
+        private readonly UserController _usrController;
         private ISource sourceSelected;
 
-        public AdminMain(SetController setControler, QuestionController questionController, SourceController sourceControler)
+        public AdminMain(SetController setControler, QuestionController questionController, SourceController sourceControler, UserController usrController)
         {
-            _setControler = setControler;
+            _setController = setControler;
             _questionController = questionController;
-            _sourceControler = sourceControler;
+            _sourceController = sourceControler;
+            _usrController = usrController;
             InitializeComponent();
 
-            foreach (var item in _setControler.GetAllSet())
+            //Load the sets into the comboBox
+            foreach (var item in _setController.GetAllSet())
             {
-                cb_set.Items.Add(item.name.ToString());
+                cb_set.Items.Add(item.Name.ToString());
             }
 
         }
 
+        /// <summary>
+        /// When the set comboBox is changed
+        /// </summary>
         private void cb_setChanged(object sender, EventArgs e)
         {
             cb_category.Enabled = true;
@@ -45,7 +42,7 @@ namespace UI
 
             cb_category.Items.Clear();
 
-            this.sourceSelected = _sourceControler.GetSourceByName(cb_set.Text);
+            this.sourceSelected = _sourceController.GetSourceByName(cb_set.Text);
 
             foreach (string name in sourceSelected.categoryDictionary.Values)
             {
@@ -61,11 +58,23 @@ namespace UI
         private void b_loadQuestions_Click(object sender, EventArgs e)
         {
             _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.SelectedIndex, Decimal.ToInt32(nud_amount.Value));
+            MessageBox.Show("Questions loaded correctly");
         }
 
+        /// <summary>
+        /// Delete all questions from the DB
+        /// </summary>
         private void b_eraseQuestions_Click(object sender, EventArgs e)
         {
             _questionController.DeleteQuestions();
+            MessageBox.Show("Questions erased correctly");
+        }
+
+        private void b_LogOut_Click(object sender, EventArgs e)
+        {
+            Login ventana = new Login(_usrController, _setController, _questionController, _sourceController);
+            this.Close();
+            ventana.Show();
         }
     }
 }

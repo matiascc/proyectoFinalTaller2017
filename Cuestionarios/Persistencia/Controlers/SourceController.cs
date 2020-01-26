@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Questionnaire.DAL.EntityFramework;
-using Questionnaire.Domain;
-using Questionnaire.DTOs;
+﻿using System.Collections.Generic;
 using Questionnaire.Source;
 
 namespace Questionnaire.Controlers
 {
     public class SourceController
     {
-        public List<ISource> sourcesList { get; set; }
+        public List<ISource> SourcesList { get; private set; }
 
         public SourceController()
         {
-            sourcesList = new List<ISource>();
-            this.sourcesList.Add(new OpentdbSource());
+            SourcesList = new List<ISource>();
+            //Adds each one of the Sources' clases to SourcesList
+            this.SourcesList.Add(new OpentdbSource());
+            //Must add to the list here each source that is implemented in the future
         }
 
         public ISource GetSourceByName(string pName)
         {
-            return (sourcesList.Find(s => s.Name == pName));
+            return (SourcesList.Find(s => s.Name == pName));
         }
     }
 }

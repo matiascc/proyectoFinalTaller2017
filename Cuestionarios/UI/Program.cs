@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
 using AutoMapper;
@@ -23,7 +19,7 @@ namespace UI
 
             UserController usrController = new UserController(mapper);
             SetController setController = new SetController(mapper);
-            QuestionController questController = new QuestionController(mapper,setController);
+            QuestionController questController = new QuestionController(mapper);
             SourceController sourceController = new SourceController();
 
             Application.Run(new Login(usrController, setController, questController, sourceController));

@@ -12,7 +12,7 @@ namespace Questionnaire.Controlers
 {
     public class SetController
     {
-        UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
+        readonly UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
         private readonly IMapper _mapper;
 
         public SetController(IMapper mapper) => _mapper = mapper;
@@ -22,17 +22,11 @@ namespace Questionnaire.Controlers
             List<SetDTO> listSet = new List<SetDTO>();
 
             IEnumerable<Set> set = iUOfW.SetRepository.GetAll().ToList();
-            iUOfW.Complete();
             foreach (var item in set)
             {
                 listSet.Add(_mapper.Map<Set, SetDTO>(item));
             }
             return listSet;
-        }
-
-        public SetDTO GetSetByName(string pName)
-        {
-            return _mapper.Map<Set, SetDTO>(iUOfW.SetRepository.GetSetByName(pName)); ;
         }
 
     }

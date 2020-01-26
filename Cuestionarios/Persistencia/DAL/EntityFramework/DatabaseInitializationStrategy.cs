@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 using Questionnaire.Domain;
-using Questionnaire.Source;
 
 namespace Questionnaire.DAL.EntityFramework
 {
@@ -13,17 +8,23 @@ namespace Questionnaire.DAL.EntityFramework
     {
         protected override void Seed(QuestionnaireDbContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
+            //Adds the default admin user
             context.User.Add(new User
             {
-                username = "admin",
-                password = "admin",
-                admin = true
+                Username = "admin",
+                Password = "admin",
+                Admin = true
             });
 
+            //Adds the default set of questions
             context.Sets.Add(new Set
             {
-                name = "opentdb"
+                Name = "opentdb"
             });
 
             context.SaveChanges();

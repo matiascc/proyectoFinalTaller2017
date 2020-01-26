@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,11 +8,11 @@ namespace Questionnaire.Domain
     public class Question
     {
         [Key]
-        public int id { get; set; }
-        public string question { get; set; }
-        public virtual int difficulty { get; set; }
-        public virtual int category { get; set; }
-        public virtual IList<Option> options { get; set; }
-        public virtual int setID { get; set; }
+        public int Id { get; set; }
+        public string QuestionSentence { get; set; }
+        public virtual int Difficulty { get; set; }
+        public virtual int Category { get; set; }
+        public virtual IList<Option> Options { get; set; }
+        public virtual int SetID { get; set; }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Questionnaire.DAL
 {
@@ -10,7 +6,7 @@ namespace Questionnaire.DAL
     {
         void Add(TEntity pEntity);
         void Remove(TEntity pEntity);
-        TEntity Get(int pId);
+        TEntity GetByID(int pId);
         IEnumerable<TEntity> GetAll();
     }
 }

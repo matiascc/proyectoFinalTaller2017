@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,10 +8,10 @@ namespace Questionnaire.Domain
     public class Option
     {
         [Key]
-        public int id { get; set; }
-        public string answer { get; set; }
-        public Boolean correct { get; set; }
-        public virtual int questionID { get; set; }
-        public virtual Question question { get; set; }
+        public int Id { get; set; }
+        public string Answer { get; set; }
+        public Boolean Correct { get; set; }
+        public virtual int QuestionID { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

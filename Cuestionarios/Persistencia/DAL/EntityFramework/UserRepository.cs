@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
-using Questionnaire.Domain;
+﻿using Questionnaire.Domain;
 
 namespace Questionnaire.DAL.EntityFramework
 {
@@ -12,11 +6,14 @@ namespace Questionnaire.DAL.EntityFramework
     {
         public UserRepository(QuestionnaireDbContext pContext) : base(pContext)
         {
-           
         }
-        public User Get(string pId)
+        
+        /// <summary>
+        /// Gets User by username
+        /// </summary>
+        public User GetByUserName(string pUserName)
         {
-            return this.iDbContext.Set<User>().Find(pId);
+            return this.iDbContext.Set<User>().Find(pUserName);
         }
     }
 }
