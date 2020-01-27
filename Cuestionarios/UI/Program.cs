@@ -15,6 +15,7 @@ namespace UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             IMapper mapper = Questionnaire.AutoMapper.AutoMapper.ConfigureAutomapper(); 
 
             UserController usrController = new UserController(mapper);

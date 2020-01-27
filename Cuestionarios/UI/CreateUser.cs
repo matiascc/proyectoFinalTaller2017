@@ -7,6 +7,7 @@ namespace UI
     public partial class CreateUser : Form
     {
         private readonly UserController _usrController;
+        private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public CreateUser(UserController usrController)
         {
@@ -19,13 +20,19 @@ namespace UI
         {
             try
             {
+                logger.Debug("Trying to create a new user");
+
                 _usrController.AddUser(tb_username.Text, tb_password.Text, false);
-                MessageBox.Show("Usuario agregado correctamente");
+
+                MessageBox.Show("User added successfully");
+                logger.Debug("User added successfully");
+
                 this.Close();
             }
             catch(Exception exc)
             {
-                MessageBox.Show("No se pudo crear el usuario", exc.Message);
+                MessageBox.Show("Couldn't create the user", exc.Message);
+                logger.Debug("Couldn't create the user", exc.Message);
             }            
         }
     }

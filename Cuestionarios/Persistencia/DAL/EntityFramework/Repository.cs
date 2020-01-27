@@ -18,7 +18,7 @@ namespace Questionnaire.DAL.EntityFramework
 
         public Repository(TDbContext pContext)
         {
-            this.iDbContext = pContext ?? throw new ArgumentNullException(nameof(pContext)); 
+            this.iDbContext = pContext; 
         }
 
         /// <summary>
@@ -26,11 +26,6 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public void Add(TEntity pEntity)
         {
-            if (pEntity == null)
-            {
-                throw new ArgumentNullException(nameof(pEntity));
-            }
-
             this.iDbContext.Set<TEntity>().Add(pEntity);
         }
 
@@ -55,11 +50,6 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public void Remove(TEntity pEntity)
         {
-            if (pEntity == null)
-            {
-                throw new ArgumentNullException(nameof(pEntity));
-            }
-
             this.iDbContext.Set<TEntity>().Remove(pEntity);
         }
 

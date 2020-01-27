@@ -8,11 +8,6 @@ namespace Questionnaire.DAL.EntityFramework
     {
         protected override void Seed(QuestionnaireDbContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
             //Adds the default admin user
             context.User.Add(new User
             {

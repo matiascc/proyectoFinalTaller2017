@@ -7,18 +7,17 @@ namespace UI
 {
     public partial class AdminMain : Form
     {
-        private readonly SetController _setController; 
+        private readonly SetController _setController;
         private readonly QuestionController _questionController;
         private readonly SourceController _sourceController;
-        private readonly UserController _usrController;
         private ISource sourceSelected;
+        private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public AdminMain(SetController setControler, QuestionController questionController, SourceController sourceControler, UserController usrController)
+        public AdminMain(SetController setControler, QuestionController questionController, SourceController sourceControler)
         {
             _setController = setControler;
             _questionController = questionController;
             _sourceController = sourceControler;
-            _usrController = usrController;
             InitializeComponent();
 
             //Load the sets into the comboBox
@@ -57,8 +56,25 @@ namespace UI
 
         private void b_loadQuestions_Click(object sender, EventArgs e)
         {
-            _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.SelectedIndex, Decimal.ToInt32(nud_amount.Value));
-            MessageBox.Show("Questions loaded correctly");
+            logger.Debug("Getting new questions");
+
+            try
+            {
+                _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.SelectedIndex, Decimal.ToInt32(nud_amount.Value));
+
+                MessageBox.Show("Questions saved successfully");
+                logger.Debug("Questions saved successfully");
+            }
+            catch(ArgumentNullException ex)
+            {
+                MessageBox.Show("Error trying to access the questions' API", ex.ToString());
+                logger.Debug("Error trying to access the questions' APIs", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't saved the questions", ex.ToString());
+                logger.Debug("Couldn't saved the questions", ex.Message);
+            }
         }
 
         /// <summary>
@@ -66,15 +82,31 @@ namespace UI
         /// </summary>
         private void b_eraseQuestions_Click(object sender, EventArgs e)
         {
-            _questionController.DeleteQuestions();
-            MessageBox.Show("Questions erased correctly");
+            logger.Debug("Erasing all questions");
+
+            try
+            {
+                _questionController.DeleteQuestions();
+                MessageBox.Show("Questions erased successfully");
+                logger.Debug("Questions erased successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't erased questions", ex.ToString());
+                logger.Debug("Couldn't erased questions", ex.Message);
+            }
         }
 
         private void b_LogOut_Click(object sender, EventArgs e)
         {
-            Login ventana = new Login(_usrController, _setController, _questionController, _sourceController);
+            logger.Debug("User logged out");
+            this.Owner.Show();
             this.Close();
-            ventana.Show();
+        }
+
+        private new void FormClosed(object sender, FormClosingEventArgs e)
+        {
+            this.Owner.Show();
         }
     }
 }

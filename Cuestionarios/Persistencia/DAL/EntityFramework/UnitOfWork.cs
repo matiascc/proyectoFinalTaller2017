@@ -1,4 +1,5 @@
 ﻿using System;
+using Npgsql;
 
 namespace Questionnaire.DAL.EntityFramework
 {
@@ -28,7 +29,14 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public void Complete()
         {
-            this.iDbContext.SaveChanges();
+            try
+            {
+                this.iDbContext.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw new NpgsqlException("Coudn't save changes to the database", ex);
+            }
         }
 
         /// <summary>

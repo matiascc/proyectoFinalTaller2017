@@ -134,6 +134,11 @@
             // 
             this.nud_amount.Enabled = false;
             this.nud_amount.Location = new System.Drawing.Point(71, 153);
+            this.nud_amount.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
             this.nud_amount.Name = "nud_amount";
             this.nud_amount.Size = new System.Drawing.Size(154, 20);
             this.nud_amount.TabIndex = 13;
@@ -177,6 +182,7 @@
             this.Controls.Add(this.label1);
             this.Name = "AdminMain";
             this.Text = "AdminMain";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.nud_amount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

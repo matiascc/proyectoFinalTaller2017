@@ -28,7 +28,7 @@ namespace Questionnaire.Controlers
             }
             else
             {
-                throw new Exception();
+                throw new Exception("There is already a user with that username");
             }
         }
 

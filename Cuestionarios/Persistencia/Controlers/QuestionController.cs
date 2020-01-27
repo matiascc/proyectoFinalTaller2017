@@ -8,7 +8,6 @@ namespace Questionnaire.Controlers
     {
         readonly UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
         private readonly IMapper _mapper;
-        private readonly ISource _source;
 
         public QuestionController(IMapper mapper) => _mapper = mapper;
 

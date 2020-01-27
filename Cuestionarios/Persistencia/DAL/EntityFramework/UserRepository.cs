@@ -1,4 +1,6 @@
 ﻿using Questionnaire.Domain;
+using System;
+using Npgsql;
 
 namespace Questionnaire.DAL.EntityFramework
 {
@@ -13,7 +15,14 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public User GetByUserName(string pUserName)
         {
-            return this.iDbContext.Set<User>().Find(pUserName);
+            try
+            {
+                return this.iDbContext.Set<User>().Find(pUserName);
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());   
+            }
         }
     }
 }

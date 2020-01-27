@@ -56,11 +56,6 @@ namespace Questionnaire.Source
 
             dynamic mResponseJSON = CallTheQuestionAPI(this.Url);
 
-            if (mResponseJSON == null)
-            {
-                throw new ArgumentNullException(nameof(mResponseJSON));
-            }
-
             List<Question> questionsList = new List<Question>();
 
             foreach (var bResponseItem in mResponseJSON.results)
@@ -144,6 +139,11 @@ namespace Questionnaire.Source
                     dynamic mResponseJSON = JsonConvert.DeserializeObject(reader.ReadToEnd());
 
                     System.Console.WriteLine("Código de respuesta: {0}", mResponseJSON.response_code);
+
+                    if (mResponseJSON == null)
+                    {
+                        throw new ArgumentNullException(nameof(mResponseJSON));
+                    }
 
                     return mResponseJSON;
                 }

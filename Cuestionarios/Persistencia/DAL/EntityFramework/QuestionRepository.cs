@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Questionnaire.Domain;
 using Questionnaire.Source;
+using Npgsql;
 
 namespace Questionnaire.DAL.EntityFramework
 {
@@ -21,31 +22,39 @@ namespace Questionnaire.DAL.EntityFramework
             Set selectedSet = pUnitOfWork.SetRepository.GetSetByName(pSource.Name);
 
             List<Question> questionsList = pSource.GetQuestions(pDificulty, pCategory, pAmount);
-            foreach (Question question in questionsList)
+
+            try
             {
-                if (!this.IsAlreadySaved(question.QuestionSentence))
+                foreach (Question question in questionsList)
                 {
-                    //Put the options in a separete list and delete them from the question
-                    IList<Option> optionsList = new List<Option>();
-                    foreach (Option opt in question.Options)
+                    if (!this.IsAlreadySaved(question.QuestionSentence))
                     {
-                        optionsList.Add(opt);
-                    }
-                    question.Options.Clear();
+                        //Put the options in a separete list and delete them from the question
+                        IList<Option> optionsList = new List<Option>();
+                        foreach (Option opt in question.Options)
+                        {
+                            optionsList.Add(opt);
+                        }
+                        question.Options.Clear();
 
-                    //Add the question to the DB
-                    question.SetID = selectedSet.Id;
-                    iDbContext.Question.Add(question);
-                    pUnitOfWork.SetRepository.AddQuestion(question);
+                        //Add the question to the DB
+                        question.SetID = selectedSet.Id;
+                        iDbContext.Question.Add(question);
+                        pUnitOfWork.SetRepository.AddQuestion(question);
 
-                    //Add each option to the DB
-                    foreach (Option option in optionsList)
-                    {
-                        option.Question = question;
-                        option.QuestionID = question.Id;
-                        this.AddOption(option);
+                        //Add each option to the DB
+                        foreach (Option option in optionsList)
+                        {
+                            option.Question = question;
+                            option.QuestionID = question.Id;
+                            this.AddOption(option);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());
             }
         }
 
@@ -54,9 +63,16 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public void AddOption(Option pOption)
         {
-            iDbContext.Options.Attach(pOption);
-            iDbContext.Options.Add(pOption);
-            iDbContext.SaveChanges();
+            try
+            {
+                iDbContext.Options.Attach(pOption);
+                iDbContext.Options.Add(pOption);
+                iDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException("Error trying to add new options", ex);
+            }
         }
 
         /// <summary>
@@ -83,11 +99,18 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public void DeleteAllQuestions()
         {
-            foreach (Question question in this.GetAll())
+            try
             {
-                iDbContext.Question.Remove(question);
+                foreach (Question question in this.GetAll())
+                {
+                    iDbContext.Question.Remove(question);
+                }
+                iDbContext.SaveChanges();
             }
-            iDbContext.SaveChanges();
+            catch(Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());
+            }
         }
     }
 }
