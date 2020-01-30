@@ -1,43 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Questionnaire.Domain;
 using Questionnaire.Controlers;
-using Questionnaire.DTOs;
 using Questionnaire.Source;
+using Npgsql;
 
 namespace UI
 {
     public partial class AdminMain : Form
     {
-        private readonly SetController _setControler; 
+        private readonly SetController _setController;
         private readonly QuestionController _questionController;
-        private readonly SourceController _sourceControler;
+        private readonly SourceController _sourceController;
+        private ISource sourceSelected;
+        private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public AdminMain(SetController setControler, QuestionController questionController, SourceController sourceControler)
         {
-            _setControler = setControler;
+            _setController = setControler;
             _questionController = questionController;
-            _sourceControler = sourceControler;
+            _sourceController = sourceControler;
             InitializeComponent();
 
-            foreach (var item in _setControler.GetAllSet())
+            //Load the sets into the comboBox
+            foreach (var item in _setController.GetAllSet())
             {
-                cb_set.Items.Add(item.name.ToString());
+                cb_set.Items.Add(item.Name.ToString());
             }
 
-            foreach (var item in Enum.GetValues(typeof(Dificulty)))
-            {
-                cb_dificulty.Items.Add(item.ToString());
-            }
         }
 
+        /// <summary>
+        /// When the set comboBox is changed
+        /// </summary>
         private void cb_setChanged(object sender, EventArgs e)
         {
             cb_category.Enabled = true;
@@ -48,21 +42,77 @@ namespace UI
 
             cb_category.Items.Clear();
 
-            foreach (string item in Enum.GetNames(typeof(Category)))
+            this.sourceSelected = _sourceController.GetSourceByName(cb_set.Text);
+
+            foreach (string name in sourceSelected.categoryDictionary.Values)
             {
-                cb_category.Items.Add(item);
+                cb_category.Items.Add(name);
+            }
+
+            foreach (string name in sourceSelected.difficultyDictionary.Values)
+            {
+                cb_dificulty.Items.Add(name);
             }
         }
 
         private void b_loadQuestions_Click(object sender, EventArgs e)
         {
-            ISource sourceSelected = _sourceControler.GetSourceByName(cb_set.Text); 
-            _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.SelectedIndex, Decimal.ToInt32(nud_amount.Value));
+            logger.Debug("Getting new questions");
+
+            try
+            {
+                _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.SelectedIndex, Decimal.ToInt32(nud_amount.Value));
+
+                MessageBox.Show("Questions saved successfully");
+                logger.Debug("Questions saved successfully");
+            }
+            catch(ArgumentNullException ex)
+            {
+                MessageBox.Show("Error trying to access the questions' API", ex.ToString());
+                logger.Debug("Error trying to access the questions' APIs", ex.Message);
+            }
+            catch (NpgsqlException exc)
+            {
+                MessageBox.Show("Error on the database operation:", exc.Message);
+                logger.Debug("Error on the database operation:", exc.Message);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Unknown Error:", exc.Message);
+                logger.Debug("Unknown Error:", exc.Message);
+            }
         }
 
+        /// <summary>
+        /// Delete all questions from the DB
+        /// </summary>
         private void b_eraseQuestions_Click(object sender, EventArgs e)
         {
-            _questionController.DeleteQuestions();
+            logger.Debug("Erasing all questions");
+
+            try
+            {
+                _questionController.DeleteQuestions();
+                MessageBox.Show("Questions erased successfully");
+                logger.Debug("Questions erased successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't erased questions", ex.ToString());
+                logger.Debug("Couldn't erased questions", ex.Message);
+            }
+        }
+
+        private void b_LogOut_Click(object sender, EventArgs e)
+        {
+            logger.Debug("User logged out");
+            this.Owner.Show();
+            this.Close();
+        }
+
+        private new void FormClosed(object sender, FormClosingEventArgs e)
+        {
+            this.Owner.Show();
         }
     }
 }

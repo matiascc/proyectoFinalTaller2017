@@ -1,37 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Questionnaire.Domain
 {
-    public enum Category
+    public class Category
     {
-        AnyCategory,
-		GeneralKnowledge,
-        EntertainmentBooks,
-        EntertainmentFilm,
-        EntertainmentMusic,
-        EntertainmentMusicalsAndTheatres,
-        EntertainmentTelevision,
-        EntertainmentVideoGames,
-        EntertainmentBoardGames,
-        ScienceAndNature,
-        ScienceComputers,
-        ScienceMathematics,
-        Mythology,
-        Sports,
-        Geography,
-        History,
-        Politics,
-        Art,
-        Celebrities,
-        Animals,
-        Vehicles,
-        EntertainmentComics,
-        ScienceGadgets,
-        EntertainmentJapaneseAnimeAndManga,
-        EntertainmentCartoonAndAnimations
+        public Dictionary<int, string> Categories { get; private set; }
+
+        /// <summary>
+        /// Change the categories
+        /// </summary>
+        /// <param name="pDictionary">A dictionary with the ids and categories</param>
+        public void LoadCategories(Dictionary<int, string> pDictionary)
+        {
+            Categories.Clear();
+            Categories = pDictionary;
+        }
     }
 }

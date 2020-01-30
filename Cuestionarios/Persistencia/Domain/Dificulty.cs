@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Questionnaire.Domain
 {
-    public enum Dificulty
+    public class Dificulty
     {
-        AnyDificulty,
-        Easy,
-        Medium,
-        High
+        public Dictionary<int, string> Dificulties { get; private set; }
+
+        /// <summary>
+        /// Change the dificulties
+        /// </summary>
+        /// <param name="pDictionary">A dictionary with the ids and dificulties</param>
+        public void LoadCategories(Dictionary<int, string> pDictionary)
+        {
+            Dificulties.Clear();
+            Dificulties = pDictionary;
+        }
     }
 }

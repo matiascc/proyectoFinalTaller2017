@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 using System.Net;
-using System.Web;
 using Questionnaire.Domain;
 
 namespace Questionnaire.Source
@@ -15,14 +13,28 @@ namespace Questionnaire.Source
     {
         public string Url { get; private set; }
         public string Name { get; private set; }
+        public Dictionary<int, string> categoryDictionary { get; private set; }
+        public Dictionary<int, string> difficultyDictionary { get; private set; }
         public OpentdbSource()
         {
-            this.Url = "https://opentdb.com/api.php?";   //opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
+            this.Url = "https://opentdb.com/api.php?";   //Url example: opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
             this.Name = "opentdb";
+            this.categoryDictionary = GetCategories();
+            this.difficultyDictionary = new Dictionary<int, string>()
+                                            {
+                                                {0,"easy"},
+                                                {1,"medium"},
+                                                {2,"high"},
+                                                {3,"any dificulty"},
+                                            }; ;
         }
 
+        /// <summary>
+        /// Get Questions
+        /// </summary>
         public List<Question> GetQuestions(string pDificulty, int pCategory, int pAmount)
         {
+            //Creates the url
             string category, dificulty;
             if (pCategory == 0)
             {
@@ -30,9 +42,9 @@ namespace Questionnaire.Source
             }
             else
             {
-                category = "&category=" + pCategory + 9;
+                category = "&category=" + pCategory;
             }
-            if (pDificulty == "AnyDificulty")
+            if (pDificulty == "any dificulty")
             {
                 dificulty = "";
             }
@@ -40,61 +52,100 @@ namespace Questionnaire.Source
             {
                 dificulty = "&difficulty=" + pDificulty.ToLower();
             }
-            
             this.Url = "https://opentdb.com/api.php?" + "amount=" + pAmount + category + dificulty + "&type=multiple";
+
+            dynamic mResponseJSON = CallTheQuestionAPI(this.Url);
 
             List<Question> questionsList = new List<Question>();
 
-            // Establecimiento del protocolo ssl de transporte
+            foreach (var bResponseItem in mResponseJSON.results)
+            {
+                List<Option> optionList = new List<Option>();
+                        
+                //Mark the correct answer
+                optionList.Add(new Option
+                {
+                    Answer = bResponseItem.correct_answer,
+                    Correct = true
+                });
+
+                //Adds the other answers
+                foreach (var opt in bResponseItem.incorrect_answers)
+                {
+                    optionList.Add(new Option
+                    {
+                        Answer = opt,
+                        Correct = false
+                    });
+                }
+
+                questionsList.Add(new Question
+                {
+                    QuestionSentence = bResponseItem.question,
+                    Difficulty = difficultyDictionary.FirstOrDefault(x => x.Value == bResponseItem.difficulty.ToString()).Key,
+                    Category = categoryDictionary.FirstOrDefault(x => x.Value == bResponseItem.category.ToString()).Key,
+                    Options = optionList
+                });
+            }
+
+            return (questionsList);
+        }
+
+        private Dictionary<int, string> GetCategories()
+        {
+            this.Url = "https://opentdb.com/api_category.php";
+
+            dynamic mResponseJSON = CallTheQuestionAPI(this.Url);
+
+            Dictionary<int, string> categoriesDictionary = new Dictionary<int, string>
+            {
+                { 0, "Any Category" }
+            };
+
+            //Each of the results is iterated
+            foreach (var category in mResponseJSON.trivia_categories)
+            {
+                int id = category.id;
+                string name = category.name;
+                categoriesDictionary.Add(id, name);
+            }
+
+            return (categoriesDictionary);
+
+        }
+
+        /// <summary>
+        /// Gets a response form the URL
+        /// </summary>
+        private dynamic CallTheQuestionAPI(string pUrl)
+        {
+            // Establishment of the transport ssl protocol
             System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            
-            // Se crea el request http
-            HttpWebRequest mRequest = (HttpWebRequest)WebRequest.Create(Url);
+
+            // The request http is created
+            HttpWebRequest mRequest = (HttpWebRequest)WebRequest.Create(pUrl);
 
             try
             {
-                // Se ejecuta la consulta
+                // The query is executed
                 WebResponse mResponse = mRequest.GetResponse();
 
-                // Se obtiene los datos de respuesta
+                // The response data is obtained
                 using (Stream responseStream = mResponse.GetResponseStream())
                 {
                     StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
 
-                    // Se parsea la respuesta y se serializa a JSON a un objeto dynamic
+                    // The response is parsed and JSON is serialized to a dynamic object
                     dynamic mResponseJSON = JsonConvert.DeserializeObject(reader.ReadToEnd());
 
-                    System.Console.WriteLine("Código de respuesta: {0}", mResponseJSON.response_code);  
+                    System.Console.WriteLine("Código de respuesta: {0}", mResponseJSON.response_code);
 
-                    // Se iteran cada uno de los resultados.
-                    foreach (var bResponseItem in mResponseJSON.results)
+                    if (mResponseJSON == null)
                     {
-                        List<Option> optionList = new List<Option>();
-                        
-                        optionList.Add(new Option
-                        {
-                            answer = bResponseItem.correct_answer,
-                            correct = true
-                        });
+                        throw new ArgumentNullException(nameof(mResponseJSON));
+                    }
 
-                        foreach (var opt in bResponseItem.incorrect_answers)
-                        {
-                            optionList.Add(new Option
-                            {
-                                answer = opt,
-                                correct = false
-                            });
-                        }
-
-                        questionsList.Add(new Question
-                        {
-                            question = bResponseItem.question,
-                            dificulty =  (int)Enum.Parse(typeof(Dificulty), pDificulty),
-                            category = pCategory,
-                            options = optionList
-                        });
-                        
-                    }   
+                    return mResponseJSON;
                 }
             }
             catch (WebException ex)
@@ -106,14 +157,14 @@ namespace Questionnaire.Source
                     String mErrorText = mReader.ReadToEnd();
 
                     System.Console.WriteLine("Error: {0}", mErrorText);
+                    return null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.Console.WriteLine("Error: {0}", ex.Message);
+                return null;
             }
-
-            return (questionsList);
         }
     }
 }

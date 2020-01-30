@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Questionnaire.DTOs
 {
     public class UserDTO
     {
-        public string username { get; set; }
+        public string Username { get; set; }
 
-        public string password { get; set; }
+        public string Password { get; set; }
 
-        public Boolean admin { get; set; }
+        public Boolean Admin { get; set; }
     }
 }

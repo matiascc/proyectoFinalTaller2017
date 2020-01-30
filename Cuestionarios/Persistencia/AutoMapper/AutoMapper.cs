@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Questionnaire.Domain;
 using Questionnaire.DTOs;
 
 namespace Questionnaire.AutoMapper
 {
-    public class AutoMapper
+    /// <summary>
+    /// Maps the domain entities to DTOs and vice versa.
+    /// </summary>
+    public static class AutoMapper
     {
         public static IMapper ConfigureAutomapper()
         {

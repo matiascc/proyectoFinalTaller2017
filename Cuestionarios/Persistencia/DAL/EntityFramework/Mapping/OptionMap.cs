@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity.ModelConfiguration;
+﻿using System.Data.Entity.ModelConfiguration;
 using Questionnaire.Domain;
 
 namespace Questionnaire.DAL.EntityFramework.Mapping
 {
     class OptionMap : EntityTypeConfiguration<Option>
     {
+        /// <summary>
+        /// Maps Option Class to the database
+        /// </summary>
         public OptionMap()
         {
             this.ToTable("Option");
 
-            this.HasKey(b => b.id)
-                .Property(b => b.id)
+            this.HasKey(b => b.Id)
+                .Property(b => b.Id)
                 .HasColumnName("id")
                 .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 
-            this.Property(b => b.answer)
+            this.Property(b => b.Answer)
                 .IsRequired()
                 .HasColumnName("answer");
 
-            this.Property(b => b.correct)
+            this.Property(b => b.Correct)
                 .IsRequired()
                 .HasColumnName("correct");
         }

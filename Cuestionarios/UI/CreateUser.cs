@@ -1,47 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
+using Npgsql;
 
 namespace UI
 {
     public partial class CreateUser : Form
     {
         private readonly UserController _usrController;
-        private readonly SetController _setController;
-        private readonly QuestionController _questController;
-        private readonly SourceController _sourceController;
+        private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public CreateUser(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController)
+        public CreateUser(UserController usrController)
         {
             _usrController = usrController;
-            _setController = setController;
-            _questController = questController;
-            _sourceController = sourceController;
 
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void b_register_Click(object sender, EventArgs e)
         {
             try
             {
+                logger.Debug("Trying to create a new user");
+
                 _usrController.AddUser(tb_username.Text, tb_password.Text, false);
-                MessageBox.Show("Usuario agregado correctamente");
-                Login ventana = new Login(_usrController, _setController, _questController, _sourceController);
-                this.Hide();
-                ventana.Show();
+
+                MessageBox.Show("User added successfully");
+                logger.Debug("User added successfully");
+
+                this.Close();
             }
-            catch(Exception exc)
+            catch (NpgsqlException exc)
             {
-                MessageBox.Show("No se pudo crear el usuario", exc.Message);
-            }            
+                MessageBox.Show("Error on the database operation:", exc.Message);
+                logger.Debug("Error on the database operation:", exc.Message);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Unknown Error:", exc.Message);
+                logger.Debug("Unknown Error:", exc.Message);
+            }
         }
     }
 }

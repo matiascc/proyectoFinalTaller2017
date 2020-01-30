@@ -1,41 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity.ModelConfiguration;
+﻿using System.Data.Entity.ModelConfiguration;
 using Questionnaire.Domain;
 
 namespace Questionnaire.DAL.EntityFramework.Mapping
 {
     class SetMap : EntityTypeConfiguration<Set>
     {
+        /// <summary>
+        /// Maps Set Class to the database
+        /// </summary>
         public SetMap()
         {
             this.ToTable("Set");
 
-            this.HasKey(b => b.id)
-                .Property(b => b.id)
+            this.HasKey(b => b.Id)
+                .Property(b => b.Id)
                 .HasColumnName("id")
                 .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 
-            /*this.HasIndex(b => b.name)
-                .IsUnique()
-                .HasName("name");*/
-
-            this.Property(b => b.name)
+            this.Property(b => b.Name)
                 .IsRequired()
                 .HasColumnName("name");
 
-            this.HasMany<Question>(b => b.questions)
+            //Maps the relation between Set and Question (One to Many)
+            this.HasMany<Question>(b => b.Questions)
                 .WithRequired()
-                .HasForeignKey<int>(b => b.setID)
+                .HasForeignKey<int>(b => b.SetID)
                 .WillCascadeOnDelete();
-
-            /*this.HasMany<Question>(C => C.questions)
-                .WithRequired(I => I.set)
-                .Map(pMapping => pMapping.MapKey("setId"))
-                .WillCascadeOnDelete();*/
         }
     }
 }

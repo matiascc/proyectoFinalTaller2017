@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
 using Questionnaire.DTOs;
+using Npgsql;
 
 namespace UI
 {
@@ -18,58 +12,79 @@ namespace UI
         private readonly SetController _setController;
         private readonly QuestionController _questController;
         private readonly SourceController _sourceController;
+
+        private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public Login(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController)
         {
-            _usrController = usrController;
-            _setController = setController;
-            _questController = questController;
-            _sourceController = sourceController;
+        _usrController = usrController;
+        _setController = setController;
+        _questController = questController;
+        _sourceController = sourceController;
 
-            InitializeComponent();
+        InitializeComponent();
         }
 
         private void Login_Load(object sender, EventArgs e)
         {
-
         }
         
         private void b_login_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 UserDTO usr = _usrController.GetUser(tb_username.Text);
-                if(usr.password == tb_password.Text)
+                
+                logger.Debug("Trying to log in as username:" + tb_username.Text);
+                
+                if (usr == null)
                 {
-                    if (usr.admin)
-                    {
-                        AdminMain ventana = new AdminMain(_setController, _questController, _sourceController);
-                        this.Hide();
-                        ventana.Show();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Usuario logeado correctamente (sin permisos)");
-                    }
-                        
+                    MessageBox.Show("Couldn't log in: incorrect username");
+                    logger.Debug("Couldn't log in: incorrect username");
+                }
+                else if(usr.Password != tb_password.Text)
+                {
+                    MessageBox.Show("Couldn't log in: incorrect password");
+                    logger.Debug("Couldn't log in: incorrect password");
                 }
                 else
                 {
-                    MessageBox.Show("Contraseña incorrecta");
+                    logger.Debug("User logged in successfully");
+
+                    if (usr.Admin)
+                    {
+                        AdminMain ventana = new AdminMain(_setController, _questController, _sourceController);
+                        ventana.Owner = this;
+                        ventana.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("User logged in successfully (without privileges)");
+                    }
                 }
-            //}
-            //catch (Exception exc)
-            //{
-            //    MessageBox.Show("Nombre de usario incorrecto", exc.Message);
-            //}
+            }
+            catch (NpgsqlException exc)
+            {
+                MessageBox.Show("Error on the database operation:", exc.Message);
+                logger.Debug("Error on the database operation:", exc.Message);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Unknown Error:", exc.Message);
+                logger.Debug("Unknown Error:", exc.Message);
+            }
         }
 
         private void b_createUser_Click(object sender, EventArgs e)
         {
-            CreateUser ventana = new CreateUser(_usrController, _setController, _questController, _sourceController);
-            this.Hide();
-            ventana.Show();
+            CreateUser ventana = new CreateUser(_usrController);
+            ventana.ShowDialog();
         }
 
+        /// <summary>
+        /// Try to login when the Enter Key is pressed
+        /// </summary>
         private void tb_password_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
