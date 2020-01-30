@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
+using Npgsql;
 
 namespace UI
 {
@@ -29,11 +30,16 @@ namespace UI
 
                 this.Close();
             }
-            catch(Exception exc)
+            catch (NpgsqlException exc)
             {
-                MessageBox.Show("Couldn't create the user", exc.Message);
-                logger.Debug("Couldn't create the user", exc.Message);
-            }            
+                MessageBox.Show("Error on the database operation:", exc.Message);
+                logger.Debug("Error on the database operation:", exc.Message);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Unknown Error:", exc.Message);
+                logger.Debug("Unknown Error:", exc.Message);
+            }
         }
     }
 }

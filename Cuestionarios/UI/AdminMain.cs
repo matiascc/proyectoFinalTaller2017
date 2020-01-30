@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Questionnaire.Controlers;
 using Questionnaire.Source;
+using Npgsql;
 
 namespace UI
 {
@@ -70,10 +71,15 @@ namespace UI
                 MessageBox.Show("Error trying to access the questions' API", ex.ToString());
                 logger.Debug("Error trying to access the questions' APIs", ex.Message);
             }
-            catch (Exception ex)
+            catch (NpgsqlException exc)
             {
-                MessageBox.Show("Couldn't saved the questions", ex.ToString());
-                logger.Debug("Couldn't saved the questions", ex.Message);
+                MessageBox.Show("Error on the database operation:", exc.Message);
+                logger.Debug("Error on the database operation:", exc.Message);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Unknown Error:", exc.Message);
+                logger.Debug("Unknown Error:", exc.Message);
             }
         }
 
