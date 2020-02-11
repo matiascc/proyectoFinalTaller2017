@@ -60,7 +60,10 @@ namespace UI
                     }
                     else
                     {
-                        MessageBox.Show("User logged in successfully (without privileges)");
+                        Game ventana = new Game(_usrController, _setController, _questController, _sourceController, usr);
+                        ventana.Owner = this;
+                        ventana.Show();
+                        this.Hide();
                     }
                 }
             }
