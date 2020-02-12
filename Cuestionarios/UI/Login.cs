@@ -12,15 +12,17 @@ namespace UI
         private readonly SetController _setController;
         private readonly QuestionController _questController;
         private readonly SourceController _sourceController;
+        private readonly GameController _gameController;
 
         private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public Login(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController)
+        public Login(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController, GameController gameController)
         {
         _usrController = usrController;
         _setController = setController;
         _questController = questController;
         _sourceController = sourceController;
+        _gameController = gameController;
 
         InitializeComponent();
         }
@@ -60,7 +62,7 @@ namespace UI
                     }
                     else
                     {
-                        Game ventana = new Game(_usrController, _setController, _questController, _sourceController, usr);
+                        Game ventana = new Game(_usrController, _setController, _questController, _sourceController, _gameController, usr);
                         ventana.Owner = this;
                         ventana.Show();
                         this.Hide();

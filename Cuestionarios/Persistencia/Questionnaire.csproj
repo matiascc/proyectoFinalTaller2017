@@ -70,11 +70,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapper.cs" />
+    <Compile Include="Controlers\GameController.cs" />
     <Compile Include="Controlers\QuestionController.cs" />
     <Compile Include="Controlers\SetController.cs" />
     <Compile Include="Controlers\SourceController.cs" />
     <Compile Include="Controlers\UserController.cs" />
     <Compile Include="DAL\EntityFramework\DatabaseInitializationStrategy.cs" />
+    <Compile Include="DAL\EntityFramework\Mapping\ScoreMap.cs" />
     <Compile Include="DAL\EntityFramework\OptionRepository.cs" />
     <Compile Include="DAL\EntityFramework\QuestionRepository.cs" />
     <Compile Include="DAL\IOptionRepository.cs" />
@@ -96,10 +98,12 @@
     <Compile Include="Domain\Dificulty.cs" />
     <Compile Include="Domain\Option.cs" />
     <Compile Include="Domain\Question.cs" />
+    <Compile Include="Domain\Score.cs" />
     <Compile Include="Domain\Set.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="DTOs\OptionDTO.cs" />
     <Compile Include="DTOs\QuestionDTO.cs" />
+    <Compile Include="DTOs\ScoreDTO.cs" />
     <Compile Include="DTOs\SetDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Program.cs" />

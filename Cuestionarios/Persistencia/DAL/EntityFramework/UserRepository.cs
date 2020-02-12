@@ -24,5 +24,23 @@ namespace Questionnaire.DAL.EntityFramework
                 throw new NpgsqlException(ex.ToString());   
             }
         }
+
+        /// <summary>
+        /// Add the score to a user
+        /// </summary>
+        public void AddScore(User user, double scoreValue)
+        {
+            Score score = new Score
+            {
+                ScoreValue = scoreValue,
+                User = user,
+                Username = user.Username
+            };
+
+            iDbContext.Score.Attach(score);
+            iDbContext.Score.Add(score);
+            iDbContext.SaveChanges();
+        }
+
     }
 }

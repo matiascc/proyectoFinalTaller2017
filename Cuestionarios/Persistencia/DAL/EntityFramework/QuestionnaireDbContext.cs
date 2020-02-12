@@ -22,6 +22,7 @@ namespace Questionnaire.DAL.EntityFramework
         public virtual DbSet<Set> Sets { get; set; }
         public virtual DbSet<Question> Question { get; set; }
         public virtual DbSet<Option> Options { get; set; }
+        public virtual DbSet<Score> Score { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder pModelBuilder)
         {
@@ -34,6 +35,7 @@ namespace Questionnaire.DAL.EntityFramework
             pModelBuilder.Configurations.Add(new OptionMap());
             pModelBuilder.Configurations.Add(new SetMap());
             pModelBuilder.Configurations.Add(new QuestionMap());
+            pModelBuilder.Configurations.Add(new ScoreMap());
 
             base.OnModelCreating(pModelBuilder);
         }
