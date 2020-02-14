@@ -18,6 +18,7 @@ namespace Questionnaire.AutoMapper
                 cfg.CreateMap<Question, QuestionDTO>().ReverseMap();
                 cfg.CreateMap<Option, OptionDTO>().ReverseMap();
                 cfg.CreateMap<User, UserDTO>().ReverseMap();
+                cfg.CreateMap<Score, ScoreDTO>().ReverseMap();
             });
 
             IMapper mapper = new Mapper(configuration);

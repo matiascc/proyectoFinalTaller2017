@@ -1,4 +1,5 @@
 ﻿using Questionnaire.DAL.EntityFramework;
+using Questionnaire.Source;
 
 namespace Questionnaire.Controlers
 {
@@ -6,37 +7,14 @@ namespace Questionnaire.Controlers
     {
         readonly UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
         
-        public double CalculateScore(int correctAnswers, int totalQuestions, int difficulty, double time)
+        public double CalculateScore(ISource source, int correctAnswers, int totalQuestions, int difficulty, double time)
         {
             int difficultyFactor, timeFactor;
-            
-            switch (difficulty)
-            {
-                case 0:
-                    difficultyFactor = 1;
-                    break;
-                case 1:
-                    difficultyFactor = 3;
-                    break;
-                default:
-                    difficultyFactor = 5;
-                    break;
-            }
 
-            if (time < 5)
-            {
-                timeFactor = 5;
-            }
-            else if (time >= 5 && time <= 20)
-            {
-                timeFactor = 3;
-            }
-            else
-            {
-                timeFactor = 1;
-            }
+            difficultyFactor = source.GetDifficultyFactor(difficulty);
+            timeFactor = source.GetTimeFactor(time);
 
-            return ((double)correctAnswers / (double)totalQuestions * (double)difficultyFactor * (double)timeFactor);
+            return (    (  (double)correctAnswers / (double)totalQuestions  ) * (double)difficultyFactor * (double)timeFactor    );
         }
     }
 }

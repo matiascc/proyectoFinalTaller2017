@@ -1,6 +1,8 @@
 ﻿using Questionnaire.Domain;
 using System;
 using Npgsql;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Questionnaire.DAL.EntityFramework
 {
@@ -28,18 +30,32 @@ namespace Questionnaire.DAL.EntityFramework
         /// <summary>
         /// Add the score to a user
         /// </summary>
-        public void AddScore(User user, double scoreValue)
+        public void AddScore(User user, double scoreValue, double time)
         {
             Score score = new Score
             {
                 ScoreValue = scoreValue,
                 User = user,
-                Username = user.Username
+                Username = user.Username,
+                SecondsUsed = time,
+                DateOfScore = DateTime.Now
             };
 
             iDbContext.Score.Attach(score);
             iDbContext.Score.Add(score);
             iDbContext.SaveChanges();
+        }
+
+        public List<Score> GetHighScores()
+        {
+            var query = from s in iDbContext.Score
+                        orderby s.ScoreValue descending
+                        select s;
+
+            if (query.ToList().Count > 20)
+                return (query.Take(20).ToList());
+            else
+                return query.ToList();
         }
 
     }

@@ -12,34 +12,32 @@ namespace UI
     public partial class Game : Form
     {
         private readonly UserController _usrController;
-        private readonly SetController _setController;
         private readonly QuestionController _questController;
         private readonly SourceController _sourceController;
         private readonly GameController _gameController;
 
+        private readonly int totalQuestions;
+        private readonly int difficulty;
         private List<QuestionDTO> questionsList;
         private int actualQuestion;
-        private int totalQuestions;
         private int correctAnswers;
-        private int difficulty;
-
         private Stopwatch sw;
+        private ISource pSource;
 
-        public Game(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController, GameController gameController, UserDTO user) //ISource pSource, string pDificulty, int pCategory, int pAmount, 
+        public Game(UserController usrController, QuestionController questController, SourceController sourceController, GameController gameController, UserDTO user) //ISource pSource, string pDificulty, int pCategory, int pAmount, 
         {
             _usrController = usrController;
-            _setController = setController;
             _questController = questController;
             _sourceController = sourceController;
             _gameController = gameController;
 
-            //Datos inicializacion provisorios ¡¡¡Borrar luego!!!
-            ////Borrar
-            ///Borrar
-            ISource pSource = _sourceController.GetSourceByName("opentdb");
-            string pDificulty = "easy";
-            int pCategory = 0;
-            int pAmount = 5;
+                            //Datos inicializacion provisorios ¡¡¡Borrar luego!!!
+                            ////Borrar
+                            ///Borrar
+                            pSource = _sourceController.GetSourceByName("opentdb");
+                            string pDificulty = "easy";
+                            int pCategory = 0;
+                            int pAmount = 5;
 
             InitializeComponent();
 
@@ -49,13 +47,14 @@ namespace UI
             sw.Start();
 
             //Initialize Values
-            difficulty = pSource.difficultyDictionary.FirstOrDefault(x => x.Value == pDificulty).Key;
             l_username.Text = user.Username;
+            difficulty = pSource.difficultyDictionary.FirstOrDefault(x => x.Value == pDificulty).Key;
             totalQuestions = pAmount;
             actualQuestion = 1;
             correctAnswers = 0;
             questionsList = _questController.GetQuestions(pSource, pDificulty, pCategory, pAmount);
             
+            //Show first question
             ShowQuestion();
         }
 
@@ -85,8 +84,9 @@ namespace UI
                 timer1.Stop();
                 sw.Stop();
                 double time = Convert.ToDouble(sw.Elapsed.Seconds.ToString());
-                double score = _gameController.CalculateScore(correctAnswers, totalQuestions, difficulty, time);
-                _usrController.SaveScore(l_username.Text, score);
+
+                double score = _gameController.CalculateScore(pSource, correctAnswers, totalQuestions, difficulty, time);
+                _usrController.SaveScore(l_username.Text, score, time);
                 MessageBox.Show("Final Score: " + score.ToString());
 
                 this.Owner.Show();
@@ -126,6 +126,7 @@ namespace UI
                 MessageBox.Show("Incorrect Answer");
             }
 
+            //Show next question
             ++actualQuestion;
             ShowQuestion();
         }
@@ -139,6 +140,12 @@ namespace UI
         {
             this.Owner.Show();
             this.Close();
+        }
+
+        private void b_HighScores_Click(object sender, EventArgs e)
+        {
+            HighScores ventana = new HighScores(_usrController);
+            ventana.ShowDialog();
         }
     }
 }

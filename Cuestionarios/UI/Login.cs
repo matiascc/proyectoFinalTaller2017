@@ -62,7 +62,7 @@ namespace UI
                     }
                     else
                     {
-                        Game ventana = new Game(_usrController, _setController, _questController, _sourceController, _gameController, usr);
+                        Game ventana = new Game(_usrController, _questController, _sourceController, _gameController, usr);
                         ventana.Owner = this;
                         ventana.Show();
                         this.Hide();

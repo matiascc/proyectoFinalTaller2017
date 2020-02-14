@@ -47,10 +47,21 @@ namespace Questionnaire.Controlers
         /// <summary>
         /// Save the score to a username
         /// </summary>
-        public void SaveScore(string username, double scoreValue)
+        public void SaveScore(string username, double scoreValue, double time)
         {
             User user = iUOfW.UserRepository.GetByUserName(username);
-            iUOfW.UserRepository.AddScore(user, scoreValue);
+            iUOfW.UserRepository.AddScore(user, scoreValue, time);
+        }
+
+        public List<ScoreDTO> GetHighScores()
+        {
+            List<ScoreDTO> scores = new List<ScoreDTO>();
+
+            foreach (Score scr in iUOfW.UserRepository.GetHighScores())
+            {
+                scores.Add(_mapper.Map<Score, ScoreDTO>(scr));
+            }
+            return scores;
         }
     }
 }

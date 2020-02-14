@@ -166,5 +166,41 @@ namespace Questionnaire.Source
                 return null;
             }
         }
+
+        /// <summary>
+        /// Gets diffictulty factor
+        /// </summary>
+        public int GetDifficultyFactor(int difficulty)
+        {
+            switch (difficulty)
+            {
+                case 0:
+                    return 1;
+                case 1:
+                    return 3;
+                default:    //cambiar y comprobar try difficultad != 0,1,2 devolver error
+                    return 5;
+            }
+        }
+
+        /// <summary>
+        /// Gets time factor
+        /// </summary>
+        public int GetTimeFactor(double time)
+        {
+            if (time < 5)
+            {
+                return 5;
+            }
+            else if (time >= 5 && time <= 20)
+            {
+                return 3;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
     }
 }
