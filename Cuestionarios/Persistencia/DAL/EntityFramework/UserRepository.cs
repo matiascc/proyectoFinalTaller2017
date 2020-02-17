@@ -34,28 +34,46 @@ namespace Questionnaire.DAL.EntityFramework
         {
             Score score = new Score
             {
-                ScoreValue = scoreValue,
+                ScoreValue = Math.Truncate(100 * scoreValue) / 100,
                 User = user,
                 Username = user.Username,
                 SecondsUsed = time,
                 DateOfScore = DateTime.Now
             };
 
-            iDbContext.Score.Attach(score);
-            iDbContext.Score.Add(score);
-            iDbContext.SaveChanges();
+            try
+            {
+                iDbContext.Score.Attach(score);
+                iDbContext.Score.Add(score);
+                iDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException("Error trying to add new score: ", ex);
+            }
+            
         }
 
+        /// <summary>
+        /// Gets top 20 High Scores
+        /// </summary>
         public List<Score> GetHighScores()
         {
-            var query = from s in iDbContext.Score
-                        orderby s.ScoreValue descending
-                        select s;
+            try
+            {
+                var query = from s in iDbContext.Score
+                            orderby s.ScoreValue descending
+                            select s;
 
-            if (query.ToList().Count > 20)
-                return (query.Take(20).ToList());
-            else
-                return query.ToList();
+                if (query.ToList().Count > 20)
+                    return (query.Take(20).ToList());
+                else
+                    return query.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());
+            }
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using Questionnaire.Domain;
+using Npgsql;
+using System;
 
 namespace Questionnaire.DAL.EntityFramework
 {
@@ -14,7 +16,14 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public Set GetSetByName(string pName)
         {
-            return iDbContext.Sets.Where(s => s.Name == pName).Single();
+            try
+            {
+                return iDbContext.Sets.Where(s => s.Name == pName).Single();
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException("Error trying to get set name: ", ex);
+            }
         }
 
         /// <summary>
@@ -22,9 +31,16 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public void AddQuestion(Question pQuestion) 
         {
-            iDbContext.Question.Attach(pQuestion);
-            iDbContext.Question.Add(pQuestion);
-            iDbContext.SaveChanges();
+            try
+            {
+                iDbContext.Question.Attach(pQuestion);
+                iDbContext.Question.Add(pQuestion);
+                iDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException("Error trying to add questions: ", ex);
+            }
         }
     }
 }

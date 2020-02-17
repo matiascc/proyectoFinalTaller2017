@@ -71,6 +71,7 @@
             this.tb_username.Name = "tb_username";
             this.tb_username.Size = new System.Drawing.Size(169, 20);
             this.tb_username.TabIndex = 3;
+            this.tb_username.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_password_KeyDown);
             // 
             // tb_password
             // 

@@ -53,6 +53,9 @@ namespace Questionnaire.Controlers
             iUOfW.UserRepository.AddScore(user, scoreValue, time);
         }
 
+        /// <summary>
+        /// Gets the top 20 High Scores
+        /// </summary>
         public List<ScoreDTO> GetHighScores()
         {
             List<ScoreDTO> scores = new List<ScoreDTO>();

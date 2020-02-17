@@ -178,8 +178,10 @@ namespace Questionnaire.Source
                     return 1;
                 case 1:
                     return 3;
-                default:    //cambiar y comprobar try difficultad != 0,1,2 devolver error
+                case 2:   
                     return 5;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(difficulty));
             }
         }
 

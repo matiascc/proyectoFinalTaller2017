@@ -32,13 +32,13 @@ namespace UI
             }
             catch (NpgsqlException exc)
             {
-                MessageBox.Show("Error on the database operation:", exc.Message);
-                logger.Debug("Error on the database operation:", exc.Message);
+                MessageBox.Show("Error on the database operation: ", exc.Message);
+                logger.Debug("Error on the database operation: " + exc.Message);
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Unknown Error:", exc.Message);
-                logger.Debug("Unknown Error:", exc.Message);
+                MessageBox.Show("Unknown Error: ", exc.Message);
+                logger.Debug("Unknown Error: " + exc.Message);
             }
         }
     }

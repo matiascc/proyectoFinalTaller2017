@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using Npgsql;
 
 namespace Questionnaire.DAL.EntityFramework
 {
@@ -18,7 +19,14 @@ namespace Questionnaire.DAL.EntityFramework
 
         public Repository(TDbContext pContext)
         {
-            this.iDbContext = pContext; 
+            try
+            {
+                this.iDbContext = pContext;
+            }
+            catch(Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());
+            }
         }
 
         /// <summary>
@@ -26,7 +34,15 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public void Add(TEntity pEntity)
         {
-            this.iDbContext.Set<TEntity>().Add(pEntity);
+            try
+            {
+                this.iDbContext.Set<TEntity>().Add(pEntity);
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());
+            }
+            
         }
 
         /// <summary>
@@ -34,7 +50,15 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public TEntity GetByID(int pId)
         {
-            return this.iDbContext.Set<TEntity>().Find(pId);
+            try
+            {
+                return this.iDbContext.Set<TEntity>().Find(pId);
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());
+            }
+            
         }
 
         /// <summary>
@@ -42,7 +66,15 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public IEnumerable<TEntity> GetAll()
         {
-            return this.iDbContext.Set<TEntity>().ToList();
+            try
+            {
+                return this.iDbContext.Set<TEntity>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());
+            }
+            
         }
 
         /// <summary>
@@ -50,7 +82,15 @@ namespace Questionnaire.DAL.EntityFramework
         /// </summary>
         public void Remove(TEntity pEntity)
         {
-            this.iDbContext.Set<TEntity>().Remove(pEntity);
+            try
+            {
+                this.iDbContext.Set<TEntity>().Remove(pEntity);
+            }
+            catch (Exception ex)
+            {
+                throw new NpgsqlException(ex.ToString());
+            }
+            
         }
 
     }

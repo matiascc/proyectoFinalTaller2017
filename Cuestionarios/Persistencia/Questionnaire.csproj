@@ -77,9 +77,7 @@
     <Compile Include="Controlers\UserController.cs" />
     <Compile Include="DAL\EntityFramework\DatabaseInitializationStrategy.cs" />
     <Compile Include="DAL\EntityFramework\Mapping\ScoreMap.cs" />
-    <Compile Include="DAL\EntityFramework\OptionRepository.cs" />
     <Compile Include="DAL\EntityFramework\QuestionRepository.cs" />
-    <Compile Include="DAL\IOptionRepository.cs" />
     <Compile Include="DAL\IQuestionRepository.cs" />
     <Compile Include="DAL\EntityFramework\Mapping\OptionMap.cs" />
     <Compile Include="DAL\EntityFramework\Mapping\QuestionMap.cs" />
@@ -94,8 +92,6 @@
     <Compile Include="DAL\ISetRepository.cs" />
     <Compile Include="DAL\IUnitOfWork.cs" />
     <Compile Include="DAL\IUserRepository.cs" />
-    <Compile Include="Domain\Category.cs" />
-    <Compile Include="Domain\Dificulty.cs" />
     <Compile Include="Domain\Option.cs" />
     <Compile Include="Domain\Question.cs" />
     <Compile Include="Domain\Score.cs" />

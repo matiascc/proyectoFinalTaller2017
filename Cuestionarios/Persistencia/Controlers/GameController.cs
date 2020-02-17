@@ -1,12 +1,12 @@
-﻿using Questionnaire.DAL.EntityFramework;
-using Questionnaire.Source;
+﻿using Questionnaire.Source;
 
 namespace Questionnaire.Controlers
 {
     public class GameController
     {
-        readonly UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
-        
+        /// <summary>
+        /// Calcuate the score of a game
+        /// </summary>
         public double CalculateScore(ISource source, int correctAnswers, int totalQuestions, int difficulty, double time)
         {
             int difficultyFactor, timeFactor;

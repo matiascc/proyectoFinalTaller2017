@@ -57,7 +57,7 @@ namespace UI
 
         private void b_loadQuestions_Click(object sender, EventArgs e)
         {
-            logger.Debug("Getting new questions");
+            logger.Debug("Getting new questions from server");
 
             try
             {
@@ -68,18 +68,18 @@ namespace UI
             }
             catch(ArgumentNullException ex)
             {
-                MessageBox.Show("Error trying to access the questions' API", ex.ToString());
-                logger.Debug("Error trying to access the questions' APIs", ex.Message);
+                MessageBox.Show("Error trying to access the questions' API :", ex.ToString());
+                logger.Debug("Error trying to access the questions' APIs :" + ex.Message);
             }
             catch (NpgsqlException exc)
             {
-                MessageBox.Show("Error on the database operation:", exc.Message);
-                logger.Debug("Error on the database operation:", exc.Message);
+                MessageBox.Show("Error on the database operation: ", exc.Message);
+                logger.Debug("Error on the database operation: " + exc.Message);
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Unknown Error:", exc.Message);
-                logger.Debug("Unknown Error:", exc.Message);
+                MessageBox.Show("Unknown Error: ", exc.Message);
+                logger.Debug("Unknown Error: " + exc.Message);
             }
         }
 
@@ -88,18 +88,18 @@ namespace UI
         /// </summary>
         private void b_eraseQuestions_Click(object sender, EventArgs e)
         {
-            logger.Debug("Erasing all questions");
+            logger.Debug("Deleating all questions from database");
 
             try
             {
                 _questionController.DeleteQuestions();
-                MessageBox.Show("Questions erased successfully");
-                logger.Debug("Questions erased successfully");
+                MessageBox.Show("Questions deleted successfully");
+                logger.Debug("Questions deleted successfully");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Couldn't erased questions", ex.ToString());
-                logger.Debug("Couldn't erased questions", ex.Message);
+                MessageBox.Show("Couldn't delete questions: ", ex.ToString());
+                logger.Debug("Couldn't delete questions: " + ex.Message);
             }
         }
 
@@ -112,6 +112,7 @@ namespace UI
 
         private new void FormClosed(object sender, FormClosingEventArgs e)
         {
+            logger.Debug("User logged out");
             this.Owner.Show();
         }
     }

@@ -31,6 +31,7 @@ namespace Questionnaire.DAL.EntityFramework
                 throw new ArgumentNullException(nameof(pModelBuilder));
             }
 
+            //Adds each entity map
             pModelBuilder.Configurations.Add(new UserMap());
             pModelBuilder.Configurations.Add(new OptionMap());
             pModelBuilder.Configurations.Add(new SetMap());

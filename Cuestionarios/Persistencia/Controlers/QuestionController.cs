@@ -12,7 +12,6 @@ namespace Questionnaire.Controlers
     {
         readonly UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
         private readonly IMapper _mapper;
-        private static Random rng = new Random();
 
         public QuestionController(IMapper mapper) => _mapper = mapper;
 
@@ -26,34 +25,20 @@ namespace Questionnaire.Controlers
             iUOfW.QuestionRepository.DeleteAllQuestions();
         }
 
-        public List<QuestionDTO> GetQuestions(ISource pSource, string pDificulty, int pCategory, int pAmount)
+        public List<QuestionDTO> GetQuestions(ISource pSource, int pDifficulty, int pCategory, int pAmount)
         {
             List<QuestionDTO> questionsDTOList = new List<QuestionDTO>();
-            List<Question> questionsList = pSource.GetQuestions(pDificulty, pCategory, pAmount);
+            int set = iUOfW.SetRepository.GetSetByName(pSource.Name).Id;
+            List<Question> questionsList = iUOfW.QuestionRepository.GetQuestions(set, pDifficulty, pCategory, pAmount);
             foreach (Question question in questionsList)
             {
-                Shuffle(question.Options);
                 questionsDTOList.Add(_mapper.Map<Question, QuestionDTO>(question));
             }
 
             return questionsDTOList;
         }
 
-        /// <summary>
-        /// Shuffle array of options
-        /// </summary>
-        private void Shuffle(IList<Option> list)
-        {
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rng.Next(n + 1);
-                Option value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
+        
 
     }
 }
