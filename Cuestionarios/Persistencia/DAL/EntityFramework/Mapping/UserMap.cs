@@ -10,7 +10,6 @@ namespace Questionnaire.DAL.EntityFramework.Mapping
         /// </summary>
         public UserMap() 
         {
-            // Nombre de la tabla que tendrá la entidad, en este caso 'Account'.
             this.ToTable("User");
 
             this.HasKey(b => b.Username)
@@ -24,6 +23,12 @@ namespace Questionnaire.DAL.EntityFramework.Mapping
             this.Property(b => b.Admin)
                 .IsRequired()
                 .HasColumnName("admin");
+
+            //Maps the relation between User and Score (One to Many)
+            this.HasMany<Score>(b => b.Scores)
+                .WithRequired(b => b.User)
+                .HasForeignKey<string>(b => b.Username)
+                .WillCascadeOnDelete();
         }
     }
 }

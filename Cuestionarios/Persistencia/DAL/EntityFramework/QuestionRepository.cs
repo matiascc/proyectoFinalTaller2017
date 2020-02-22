@@ -9,6 +9,8 @@ namespace Questionnaire.DAL.EntityFramework
 {
     class QuestionRepository : Repository<Question, QuestionnaireDbContext>, IQuestionRepository
     {
+        private static readonly Random rng = new Random();
+
         public QuestionRepository(QuestionnaireDbContext pContext) : base(pContext)
         {
         }
@@ -37,6 +39,8 @@ namespace Questionnaire.DAL.EntityFramework
                         }
                         question.Options.Clear();
 
+                        question.QuestionSentence = CleanString(question.QuestionSentence);
+
                         //Add the question to the DB
                         question.SetID = selectedSet.Id;
                         iDbContext.Question.Add(question);
@@ -45,6 +49,7 @@ namespace Questionnaire.DAL.EntityFramework
                         //Add each option to the DB
                         foreach (Option option in optionsList)
                         {
+                            option.Answer = CleanString(option.Answer);
                             option.Question = question;
                             option.QuestionID = question.Id;
                             this.AddOption(option);
@@ -56,6 +61,17 @@ namespace Questionnaire.DAL.EntityFramework
             {
                 throw new NpgsqlException(ex.ToString());
             }
+        }
+
+        /// <summary>
+        /// Replace special characters with correct format
+        /// </summary>
+        private string CleanString(string pSentence)
+        {
+            pSentence = pSentence.Replace("&amp;", "&");
+            pSentence = pSentence.Replace("&quot;", "\"");
+            pSentence = pSentence.Replace("&#039;", "'");
+            return pSentence;
         }
 
         /// <summary>
@@ -71,14 +87,14 @@ namespace Questionnaire.DAL.EntityFramework
             }
             catch (Exception ex)
             {
-                throw new NpgsqlException("Error trying to add new options", ex);
+                throw new NpgsqlException("Error trying to add new options: ", ex);
             }
         }
 
         /// <summary>
         /// Returns if the question is already in the database
         /// </summary>
-        public Boolean IsAlreadySaved(string pQuestion)
+        private Boolean IsAlreadySaved(string pQuestion)
         {
             IEnumerable<Question> questionsList = new List<Question>();
             questionsList = this.GetAll();
@@ -110,6 +126,56 @@ namespace Questionnaire.DAL.EntityFramework
             catch(Exception ex)
             {
                 throw new NpgsqlException(ex.ToString());
+            }
+        }
+
+        public List<Question> GetQuestions(int pSet, int pDifficulty, int pCategory, int pAmount)
+        {
+            List<Question> questionsList = new List<Question>();
+            try
+            {
+                var query = from q in iDbContext.Question
+                            where q.SetID == pSet &&
+                            q.Difficulty == pDifficulty &&
+                            q.Category == pCategory
+                            select q;
+                
+                questionsList = query.ToList();
+
+                if (questionsList.Count < pAmount)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                Shuffle(questionsList);
+                questionsList.Take(pAmount);
+            }
+            catch(Exception ex)
+            {
+                throw new NpgsqlException("Error trying to get questions: ", ex);
+            }
+
+            foreach (Question question in questionsList)
+            {
+                Shuffle(question.Options);;
+            }
+
+            return questionsList;
+        }
+
+        /// <summary>
+        /// Shuffle array
+        /// </summary>
+        private void Shuffle<T>(IList<T> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
             }
         }
     }

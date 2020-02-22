@@ -10,5 +10,7 @@ namespace Questionnaire.Source
         Dictionary<int, string> categoryDictionary { get; }
         Dictionary<int, string> difficultyDictionary { get; }
         List<Question> GetQuestions(string pDificulty, int pCategory, int pAmount);
+        int GetDifficultyFactor(int difficulty);
+        int GetTimeFactor(double time);
     }
 }

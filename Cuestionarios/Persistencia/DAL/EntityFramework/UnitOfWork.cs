@@ -14,14 +14,12 @@ namespace Questionnaire.DAL.EntityFramework
             this.UserRepository = new UserRepository(this.iDbContext);
             this.SetRepository = new SetRepository(this.iDbContext);
             this.QuestionRepository = new QuestionRepository(this.iDbContext);
-            this.OptionRepository = new OptionRepository(this.iDbContext);
         }
 
         //Repositories of the DB
         public IUserRepository UserRepository { get; private set; }
         public ISetRepository SetRepository { get; private set; }
         public IQuestionRepository QuestionRepository { get; private set; }
-        public IOptionRepository OptionRepository { get; private set; }
 
 
         /// <summary>
@@ -35,7 +33,7 @@ namespace Questionnaire.DAL.EntityFramework
             }
             catch(Exception ex)
             {
-                throw new NpgsqlException("Coudn't save changes to the database", ex);
+                throw new NpgsqlException("Coudn't save changes to the database: ", ex);
             }
         }
 

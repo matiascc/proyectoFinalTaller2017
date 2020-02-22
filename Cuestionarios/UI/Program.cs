@@ -22,8 +22,9 @@ namespace UI
             SetController setController = new SetController(mapper);
             QuestionController questController = new QuestionController(mapper);
             SourceController sourceController = new SourceController();
+            GameController gameController = new GameController();
 
-            Application.Run(new Login(usrController, setController, questController, sourceController));
+            Application.Run(new Login(usrController, setController, questController, sourceController, gameController));
         }
     }
 }

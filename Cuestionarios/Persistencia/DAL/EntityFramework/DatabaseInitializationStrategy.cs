@@ -4,7 +4,7 @@ using Questionnaire.Domain;
 
 namespace Questionnaire.DAL.EntityFramework
 {
-    public class DatabaseInitializationStrategy : DropCreateDatabaseAlways<QuestionnaireDbContext>  
+    public class DatabaseInitializationStrategy : DropCreateDatabaseIfModelChanges<QuestionnaireDbContext>  
     {
         protected override void Seed(QuestionnaireDbContext context)
         {

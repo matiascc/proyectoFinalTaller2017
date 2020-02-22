@@ -8,6 +8,5 @@ namespace Questionnaire.DAL
         IUserRepository UserRepository { get; }
         ISetRepository SetRepository { get; }
         IQuestionRepository QuestionRepository { get; }
-        IOptionRepository OptionRepository { get; }
     }
 }

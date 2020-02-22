@@ -3,6 +3,7 @@ using AutoMapper;
 using Questionnaire.DAL.EntityFramework;
 using Questionnaire.Domain;
 using Questionnaire.DTOs;
+using System.Collections.Generic;
 
 namespace Questionnaire.Controlers
 {
@@ -19,7 +20,8 @@ namespace Questionnaire.Controlers
             {
                 Username = pUsername,
                 Password = pPassword,
-                Admin = pAdmin
+                Admin = pAdmin,
+                Scores = new List<Score>()
             };
             if (iUOfW.UserRepository.GetByUserName(pUsername) == null)
             {
@@ -40,6 +42,29 @@ namespace Questionnaire.Controlers
             User user = iUOfW.UserRepository.GetByUserName(username);
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
             return userDTO;
+        }
+
+        /// <summary>
+        /// Save the score to a username
+        /// </summary>
+        public void SaveScore(string username, double scoreValue, double time)
+        {
+            User user = iUOfW.UserRepository.GetByUserName(username);
+            iUOfW.UserRepository.AddScore(user, scoreValue, time);
+        }
+
+        /// <summary>
+        /// Gets the top 20 High Scores
+        /// </summary>
+        public List<ScoreDTO> GetHighScores()
+        {
+            List<ScoreDTO> scores = new List<ScoreDTO>();
+
+            foreach (Score scr in iUOfW.UserRepository.GetHighScores())
+            {
+                scores.Add(_mapper.Map<Score, ScoreDTO>(scr));
+            }
+            return scores;
         }
     }
 }

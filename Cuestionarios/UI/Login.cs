@@ -12,15 +12,17 @@ namespace UI
         private readonly SetController _setController;
         private readonly QuestionController _questController;
         private readonly SourceController _sourceController;
+        private readonly GameController _gameController;
 
         private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public Login(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController)
+        public Login(UserController usrController, SetController setController, QuestionController questController, SourceController sourceController, GameController gameController)
         {
         _usrController = usrController;
         _setController = setController;
         _questController = questController;
         _sourceController = sourceController;
+        _gameController = gameController;
 
         InitializeComponent();
         }
@@ -35,7 +37,7 @@ namespace UI
             {
                 UserDTO usr = _usrController.GetUser(tb_username.Text);
                 
-                logger.Debug("Trying to log in as username:" + tb_username.Text);
+                logger.Debug("Trying to log in as username: " + tb_username.Text);
                 
                 if (usr == null)
                 {
@@ -49,7 +51,7 @@ namespace UI
                 }
                 else
                 {
-                    logger.Debug("User logged in successfully");
+                    logger.Debug("User " + tb_username.Text + " logged in successfully");
 
                     if (usr.Admin)
                     {
@@ -60,19 +62,22 @@ namespace UI
                     }
                     else
                     {
-                        MessageBox.Show("User logged in successfully (without privileges)");
+                        Game ventana = new Game(_usrController, _questController, _sourceController, _gameController, usr);
+                        ventana.Owner = this;
+                        ventana.Show();
+                        this.Hide();
                     }
                 }
             }
             catch (NpgsqlException exc)
             {
-                MessageBox.Show("Error on the database operation:", exc.Message);
-                logger.Debug("Error on the database operation:", exc.Message);
+                MessageBox.Show("Error on the database operation: ", exc.Message);
+                logger.Debug("Error on the database operation: " + exc.Message);
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Unknown Error:", exc.Message);
-                logger.Debug("Unknown Error:", exc.Message);
+                MessageBox.Show("Unknown Error: ", exc.Message);
+                logger.Debug("Unknown Error: " + exc.Message);
             }
         }
 
