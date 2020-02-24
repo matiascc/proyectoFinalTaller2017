@@ -13,14 +13,14 @@ namespace Questionnaire.Source
     {
         public string Url { get; private set; }
         public string Name { get; private set; }
-        public Dictionary<int, string> categoryDictionary { get; private set; }
-        public Dictionary<int, string> difficultyDictionary { get; private set; }
+        public Dictionary<int, string> CategoryDictionary { get; private set; }
+        public Dictionary<int, string> DifficultyDictionary { get; private set; }
         public OpentdbSource()
         {
             this.Url = "https://opentdb.com/api.php?";   //Url example: opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
             this.Name = "opentdb";
-            this.categoryDictionary = GetCategories();
-            this.difficultyDictionary = new Dictionary<int, string>()
+            this.CategoryDictionary = GetCategories();
+            this.DifficultyDictionary = new Dictionary<int, string>()
                                             {
                                                 {0,"easy"},
                                                 {1,"medium"},
@@ -82,8 +82,8 @@ namespace Questionnaire.Source
                 questionsList.Add(new Question
                 {
                     QuestionSentence = bResponseItem.question,
-                    Difficulty = difficultyDictionary.FirstOrDefault(x => x.Value == bResponseItem.difficulty.ToString()).Key,
-                    Category = categoryDictionary.FirstOrDefault(x => x.Value == bResponseItem.category.ToString()).Key,
+                    Difficulty = DifficultyDictionary.FirstOrDefault(x => x.Value == bResponseItem.difficulty.ToString()).Key,
+                    Category = CategoryDictionary.FirstOrDefault(x => x.Value == bResponseItem.category.ToString()).Key,
                     Options = optionList
                 });
             }

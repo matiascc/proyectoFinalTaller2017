@@ -51,7 +51,7 @@ namespace UI
 
             //Initialize Values
             l_username.Text = user.Username;
-            difficulty = pSource.difficultyDictionary.FirstOrDefault(x => x.Value == pDifficulty).Key;
+            difficulty = pSource.DifficultyDictionary.FirstOrDefault(x => x.Value == pDifficulty).Key;
             totalQuestions = pAmount;
             actualQuestion = 1;
             correctAnswers = 0;

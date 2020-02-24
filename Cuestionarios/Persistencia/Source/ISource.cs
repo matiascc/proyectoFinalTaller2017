@@ -7,8 +7,8 @@ namespace Questionnaire.Source
     {
         string Url { get; }
         string Name { get; }
-        Dictionary<int, string> categoryDictionary { get; }
-        Dictionary<int, string> difficultyDictionary { get; }
+        Dictionary<int, string> CategoryDictionary { get; }
+        Dictionary<int, string> DifficultyDictionary { get; }
         List<Question> GetQuestions(string pDificulty, int pCategory, int pAmount);
         int GetDifficultyFactor(int difficulty);
         int GetTimeFactor(double time);
