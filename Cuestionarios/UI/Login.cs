@@ -22,7 +22,6 @@ namespace UI
         _setController = setController;
         _questController = questController;
         _sourceController = sourceController;
-        _gameController = gameController;
 
         InitializeComponent();
         }
@@ -62,7 +61,7 @@ namespace UI
                     }
                     else
                     {
-                        Game ventana = new Game(_usrController, _questController, _sourceController, _gameController, usr);
+                        CreateGame ventana = new CreateGame(_usrController, _gameController, _setController, _questController, _sourceController ,usr);
                         ventana.Owner = this;
                         ventana.Show();
                         this.Hide();

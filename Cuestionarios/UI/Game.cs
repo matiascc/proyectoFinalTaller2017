@@ -19,6 +19,7 @@ namespace UI
 
         private readonly int totalQuestions;
         private readonly int difficulty;
+        private readonly int category;
         private List<QuestionDTO> questionsList;
         private int actualQuestion;
         private int correctAnswers;
@@ -26,21 +27,13 @@ namespace UI
         private ISource pSource;
         private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public Game(UserController usrController, QuestionController questController, SourceController sourceController, GameController gameController, UserDTO user) //ISource pSource, string pDificulty, int pCategory, int pAmount, 
+        public Game(UserController usrController, QuestionController questController, SourceController sourceController, GameController gameController, UserDTO user, String setName, String pDifficulty, String pCategory, decimal pAmount) //ISource pSource, string pDificulty, int pCategory, int pAmount, 
         {
             _usrController = usrController;
             _questController = questController;
             _sourceController = sourceController;
             _gameController = gameController;
-
-                            //Datos inicializacion provisorios ¡¡¡Borrar luego!!!
-                            ////Borrar
-                            ///Borrar
-                            pSource = _sourceController.GetSourceByName("opentdb");
-                            string pDifficulty = "easy";  // no puede ser any
-                            int pCategory = 15;  // no puede ser any
-                            int pAmount = 5;
-
+            pSource = _sourceController.GetSourceByName(setName);
             InitializeComponent();
 
             logger.Debug("Starting new game");
@@ -52,14 +45,15 @@ namespace UI
             //Initialize Values
             l_username.Text = user.Username;
             difficulty = pSource.difficultyDictionary.FirstOrDefault(x => x.Value == pDifficulty).Key;
-            totalQuestions = pAmount;
+            category = pSource.categoryDictionary.FirstOrDefault(x => x.Value == pCategory).Key;
+            totalQuestions = Decimal.ToInt32(pAmount);
             actualQuestion = 1;
             correctAnswers = 0;
 
             try
             {
                 logger.Debug("Getting questions from database");
-                questionsList = _questController.GetQuestions(pSource, difficulty, pCategory, pAmount);
+                questionsList = _questController.GetQuestions(pSource, difficulty, category, totalQuestions);
             }
             catch (InvalidOperationException exc)
             {

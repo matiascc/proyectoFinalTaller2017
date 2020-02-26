@@ -32,11 +32,12 @@
             this.cb_set = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cb_category = new System.Windows.Forms.ComboBox();
-            this.cb_dificulty = new System.Windows.Forms.ComboBox();
+            this.cb_difficulty = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.NewGame = new System.Windows.Forms.Button();
+            this.b_LogOut = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nud_amount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,6 +48,7 @@
             this.nud_amount.Name = "nud_amount";
             this.nud_amount.Size = new System.Drawing.Size(154, 20);
             this.nud_amount.TabIndex = 21;
+            this.nud_amount.ValueChanged += new System.EventHandler(this.Nud_amount_ValueChanged);
             // 
             // cb_set
             // 
@@ -75,16 +77,18 @@
             this.cb_category.Name = "cb_category";
             this.cb_category.Size = new System.Drawing.Size(154, 21);
             this.cb_category.TabIndex = 18;
+            this.cb_category.SelectedIndexChanged += new System.EventHandler(this.Cb_category_SelectedIndexChanged);
             // 
-            // cb_dificulty
+            // cb_difficulty
             // 
-            this.cb_dificulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_dificulty.Enabled = false;
-            this.cb_dificulty.FormattingEnabled = true;
-            this.cb_dificulty.Location = new System.Drawing.Point(94, 98);
-            this.cb_dificulty.Name = "cb_dificulty";
-            this.cb_dificulty.Size = new System.Drawing.Size(154, 21);
-            this.cb_dificulty.TabIndex = 17;
+            this.cb_difficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_difficulty.Enabled = false;
+            this.cb_difficulty.FormattingEnabled = true;
+            this.cb_difficulty.Location = new System.Drawing.Point(94, 98);
+            this.cb_difficulty.Name = "cb_difficulty";
+            this.cb_difficulty.Size = new System.Drawing.Size(154, 21);
+            this.cb_difficulty.TabIndex = 17;
+            this.cb_difficulty.SelectedIndexChanged += new System.EventHandler(this.Cb_difficulty_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -100,9 +104,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(38, 101);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.Size = new System.Drawing.Size(50, 13);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Dificulty:";
+            this.label2.Text = "Difficulty:";
             // 
             // label1
             // 
@@ -113,32 +117,43 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Category:";
             // 
-            // button1
+            // NewGame
             // 
-            this.button1.Location = new System.Drawing.Point(127, 181);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "New game";
-            this.button1.UseVisualStyleBackColor = true;
+            this.NewGame.Location = new System.Drawing.Point(127, 181);
+            this.NewGame.Name = "NewGame";
+            this.NewGame.Size = new System.Drawing.Size(75, 23);
+            this.NewGame.TabIndex = 22;
+            this.NewGame.Text = "New game";
+            this.NewGame.UseVisualStyleBackColor = true;
+            this.NewGame.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // b_LogOut
+            // 
+            this.b_LogOut.Location = new System.Drawing.Point(261, 229);
+            this.b_LogOut.Name = "b_LogOut";
+            this.b_LogOut.Size = new System.Drawing.Size(56, 23);
+            this.b_LogOut.TabIndex = 23;
+            this.b_LogOut.Text = "Log Out";
+            this.b_LogOut.UseVisualStyleBackColor = true;
+            this.b_LogOut.Click += new System.EventHandler(this.B_LogOut_Click);
             // 
             // CreateGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 285);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(329, 264);
+            this.Controls.Add(this.b_LogOut);
+            this.Controls.Add(this.NewGame);
             this.Controls.Add(this.nud_amount);
             this.Controls.Add(this.cb_set);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cb_category);
-            this.Controls.Add(this.cb_dificulty);
+            this.Controls.Add(this.cb_difficulty);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "CreateGame";
             this.Text = "CreateGame";
-            this.Load += new System.EventHandler(this.CreateGame_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nud_amount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -151,10 +166,11 @@
         private System.Windows.Forms.ComboBox cb_set;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cb_category;
-        private System.Windows.Forms.ComboBox cb_dificulty;
+        private System.Windows.Forms.ComboBox cb_difficulty;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button NewGame;
+        private System.Windows.Forms.Button b_LogOut;
     }
 }
