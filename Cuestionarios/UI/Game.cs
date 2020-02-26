@@ -44,8 +44,8 @@ namespace UI
 
             //Initialize Values
             l_username.Text = user.Username;
-            difficulty = pSource.difficultyDictionary.FirstOrDefault(x => x.Value == pDifficulty).Key;
-            category = pSource.categoryDictionary.FirstOrDefault(x => x.Value == pCategory).Key;
+            difficulty = pSource.DifficultyDictionary.FirstOrDefault(x => x.Value == pDifficulty).Key;
+            category = pSource.CategoryDictionary.FirstOrDefault(x => x.Value == pCategory).Key;
             totalQuestions = Decimal.ToInt32(pAmount);
             actualQuestion = 1;
             correctAnswers = 0;

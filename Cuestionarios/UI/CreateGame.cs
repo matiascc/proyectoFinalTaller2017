@@ -58,7 +58,7 @@ namespace UI
 
             foreach (Question question in _setSelected.Questions)
             {
-                lCategory.Add(pSource.categoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value);             
+                lCategory.Add(pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value);             
             }
 
             foreach (string category in lCategory.Distinct())
@@ -77,9 +77,9 @@ namespace UI
 
             foreach (Question question in _setSelected.Questions)
             {
-                if (pSource.categoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value == cb_category.Text)
+                if (pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value == cb_category.Text)
                 {
-                  lDifficulty.Add(pSource.difficultyDictionary.FirstOrDefault(x => x.Key == question.Difficulty).Value);
+                  lDifficulty.Add(pSource.DifficultyDictionary.FirstOrDefault(x => x.Key == question.Difficulty).Value);
                 }
             }
 
@@ -96,8 +96,8 @@ namespace UI
 
             foreach (Question question in _setSelected.Questions)
             {
-                if ((pSource.categoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value == cb_category.Text)
-                    && (pSource.difficultyDictionary.FirstOrDefault(x => x.Key == question.Difficulty).Value == cb_difficulty.Text))
+                if ((pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value == cb_category.Text)
+                    && (pSource.DifficultyDictionary.FirstOrDefault(x => x.Key == question.Difficulty).Value == cb_difficulty.Text))
                 {
                     lQuestions.Add(question);
                 }
