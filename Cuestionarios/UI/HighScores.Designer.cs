@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HighScores));
             this.label1 = new System.Windows.Forms.Label();
             this.dgw_HighScores = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgw_HighScores)).BeginInit();
@@ -65,8 +66,9 @@
             this.ClientSize = new System.Drawing.Size(657, 421);
             this.Controls.Add(this.dgw_HighScores);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HighScores";
-            this.Text = "Form1";
+            this.Text = "SuperTrivia";
             ((System.ComponentModel.ISupportInitialize)(this.dgw_HighScores)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

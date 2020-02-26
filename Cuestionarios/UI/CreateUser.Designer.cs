@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateUser));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.b_register = new System.Windows.Forms.Button();
@@ -100,8 +101,9 @@
             this.Controls.Add(this.b_register);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CreateUser";
-            this.Text = "CreateUser";
+            this.Text = "SuperTrivia";
             this.ResumeLayout(false);
             this.PerformLayout();
 

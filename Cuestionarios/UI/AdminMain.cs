@@ -44,12 +44,12 @@ namespace UI
 
             this.sourceSelected = _sourceController.GetSourceByName(cb_set.Text);
 
-            foreach (string name in sourceSelected.categoryDictionary.Values)
+            foreach (string name in sourceSelected.CategoryDictionary.Values)
             {
                 cb_category.Items.Add(name);
             }
 
-            foreach (string name in sourceSelected.difficultyDictionary.Values)
+            foreach (string name in sourceSelected.DifficultyDictionary.Values)
             {
                 cb_dificulty.Items.Add(name);
             }
