@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
 using Questionnaire.Domain;
@@ -31,7 +29,7 @@ namespace UI
             InitializeComponent();
             b_NewGame.Enabled = false;
 
-            //Load the sets into the comboBox
+            /// Load the sets into the comboBox
             foreach (var item in _setController.GetAllSet())
             {
                 cb_set.Items.Add(item.Name.ToString());
@@ -45,18 +43,8 @@ namespace UI
         {
             cb_category.Enabled = true;
             pSource = _sourceController.GetSourceByName(cb_set.Text);
-            cb_category.Items.Clear();
-            var lCategory = new List<string>();
 
-            foreach (Question question in _questionController.GetAllQuestionsOfSet(pSource))
-            {
-                lCategory.Add(pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value);             
-            }
-
-            foreach (string category in lCategory.Distinct())
-            {
-                cb_category.Items.Add(category);
-            }
+            cb_category.DataSource = _questionController.GetCategoriesOfSet(pSource);
         }
 
         /// <summary>
@@ -64,24 +52,9 @@ namespace UI
         /// </summary>
         private void Cb_category_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedCategory = cb_category.Text;
             cb_difficulty.Enabled = true;
 
-            cb_difficulty.Items.Clear();
-            var lDifficulty = new List<string>();
-
-            foreach (Question question in _questionController.GetAllQuestionsOfSet(pSource))
-            {
-                if (pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value == cb_category.Text)
-                {
-                  lDifficulty.Add(pSource.DifficultyDictionary.FirstOrDefault(x => x.Key == question.Difficulty).Value);
-                }
-            }
-
-            foreach (string difficulty in lDifficulty.Distinct())
-            {
-                cb_difficulty.Items.Add(difficulty);
-            }
+            cb_difficulty.DataSource = _questionController.GetDifficultiesOfCategory(pSource, cb_category.Text);
         }
 
         /// <summary>
@@ -90,17 +63,8 @@ namespace UI
         private void Cb_difficulty_SelectedIndexChanged(object sender, EventArgs e)
         {
             nud_amount.Enabled = true;
-            var lQuestions = new List<Question>();
 
-            foreach (Question question in _questionController.GetAllQuestionsOfSet(pSource))
-            {
-                if ((pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value == cb_category.Text)
-                    && (pSource.DifficultyDictionary.FirstOrDefault(x => x.Key == question.Difficulty).Value == cb_difficulty.Text))
-                {
-                    lQuestions.Add(question);
-                }
-            }
-            nud_amount.Maximum = lQuestions.Count();
+            nud_amount.Maximum = _questionController.GetAmountOfQuestions(pSource, cb_category.Text, cb_difficulty.Text);
 
             b_NewGame.Enabled = true;
         }

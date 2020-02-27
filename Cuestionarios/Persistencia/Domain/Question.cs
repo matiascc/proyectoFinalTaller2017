@@ -10,9 +10,9 @@ namespace Questionnaire.Domain
         [Key]
         public int Id { get; set; }
         public string QuestionSentence { get; set; }
-        public virtual int Difficulty { get; set; }
-        public virtual int Category { get; set; }
-        public virtual IList<Option> Options { get; set; }
-        public virtual int SetID { get; set; }
+        public int Difficulty { get; set; }
+        public int Category { get; set; }
+        public IList<Option> Options { get; set; }
+        public int SetID { get; set; }
     }
 }

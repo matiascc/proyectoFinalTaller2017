@@ -191,5 +191,37 @@ namespace Questionnaire.DAL.EntityFramework
                 list[n] = value;
             }
         }
+
+        public List<string> GetCategoriesOfSet(ISource pSource, int set)
+        {
+            List<Question> listQuestions = this.GetAll().ToList().FindAll(q => q.SetID == set);
+            
+            List<int> categoriesKeys = listQuestions.Select(q => q.Category).Distinct().ToList();
+
+            List<string> categories = new List<string>();
+            
+            foreach (int key in categoriesKeys)
+            {
+                categories.Add(pSource.CategoryDictionary.FirstOrDefault(x => x.Key == key).Value);
+            }
+
+            return categories;
+        }
+
+        public List<string> GetDifficultiesOfCategory(ISource pSource, int set, int category)
+        {
+            List<Question> listQuestions = this.GetAll().ToList().FindAll(q => q.SetID == set && q.Category == category);
+
+            List<int> difficultiesKeys = listQuestions.Select(q => q.Difficulty).Distinct().ToList();
+
+            List<string> difficulties = new List<string>();
+
+            foreach (int key in difficultiesKeys)
+            {
+                difficulties.Add(pSource.DifficultyDictionary.FirstOrDefault(x => x.Key == key).Value);
+            }
+
+            return difficulties;
+        }
     }
 }

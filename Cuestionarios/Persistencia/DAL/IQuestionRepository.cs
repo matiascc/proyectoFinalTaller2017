@@ -12,5 +12,7 @@ namespace Questionnaire.DAL
         void AddOption(Option pOption);
         void DeleteAllQuestions();
         List<Question> GetQuestions(int pSet, int pDificulty, int pCategory, int pAmount);
+        List<string> GetCategoriesOfSet(ISource pSource, int set);
+        List<string> GetDifficultiesOfCategory(ISource pSource, int set, int category);
     }
 }
