@@ -46,9 +46,19 @@
             // 
             this.nud_amount.Enabled = false;
             this.nud_amount.Location = new System.Drawing.Point(94, 131);
+            this.nud_amount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nud_amount.Name = "nud_amount";
             this.nud_amount.Size = new System.Drawing.Size(154, 20);
             this.nud_amount.TabIndex = 21;
+            this.nud_amount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nud_amount.ValueChanged += new System.EventHandler(this.Nud_amount_ValueChanged);
             // 
             // cb_set
@@ -166,6 +176,7 @@
             this.Controls.Add(this.label1);
             this.Name = "CreateGame";
             this.Text = "CreateGame";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.nud_amount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
