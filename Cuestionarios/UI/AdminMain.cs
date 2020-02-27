@@ -61,12 +61,17 @@ namespace UI
 
             try
             {
-                _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.SelectedIndex, Decimal.ToInt32(nud_amount.Value));
+                _questionController.SaveQuestions(sourceSelected, cb_dificulty.Text, cb_category.Text, Decimal.ToInt32(nud_amount.Value));
 
                 MessageBox.Show("Questions saved successfully");
                 logger.Debug("Questions saved successfully");
             }
-            catch(ArgumentNullException ex)
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show("The API doesn't have enough questions for your query:", ex.ToString());
+                logger.Debug("The API doesn't have enough questions for your query:" + ex.Message);
+            }
+            catch (ArgumentException ex)
             {
                 MessageBox.Show("Error trying to access the questions' API :", ex.ToString());
                 logger.Debug("Error trying to access the questions' APIs :" + ex.Message);

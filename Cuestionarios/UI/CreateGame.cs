@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
 using Questionnaire.Domain;
 using Questionnaire.Source;
-using Npgsql;
-using Questionnaire.DTOs;
 
 namespace UI
 {
@@ -23,11 +16,11 @@ namespace UI
         private readonly UserController _usrController;
         private readonly GameController _gameController;
         private ISource pSource;
-        private SetDTO   _setSelected;
+        private Set _setSelected;
         private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        private readonly UserDTO _usr;
+        private readonly User _usr;
 
-        public CreateGame(UserController usrController, GameController gameController ,SetController setControler, QuestionController questionController, SourceController sourceControler, UserDTO usr)
+        public CreateGame(UserController usrController, GameController gameController ,SetController setControler, QuestionController questionController, SourceController sourceControler, User usr)
         {
             _setController = setControler;
             _questionController = questionController;

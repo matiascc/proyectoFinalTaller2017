@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
-using Questionnaire.DTOs;
+using Questionnaire.Domain;
 using Questionnaire.Source;
 using System.Diagnostics;
 using Npgsql;
@@ -20,14 +20,14 @@ namespace UI
         private readonly int totalQuestions;
         private readonly int difficulty;
         private readonly int category;
-        private List<QuestionDTO> questionsList;
+        private List<Question> questionsList;
         private int actualQuestion;
         private int correctAnswers;
         private Stopwatch sw;
         private ISource pSource;
         private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public Game(UserController usrController, QuestionController questController, SourceController sourceController, GameController gameController, UserDTO user, String setName, String pDifficulty, String pCategory, decimal pAmount) //ISource pSource, string pDificulty, int pCategory, int pAmount, 
+        public Game(UserController usrController, QuestionController questController, SourceController sourceController, GameController gameController, User user, String setName, String pDifficulty, String pCategory, decimal pAmount) //ISource pSource, string pDificulty, int pCategory, int pAmount, 
         {
             _usrController = usrController;
             _questController = questController;

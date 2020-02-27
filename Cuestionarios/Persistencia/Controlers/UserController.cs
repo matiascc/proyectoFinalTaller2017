@@ -1,8 +1,6 @@
 ﻿using System;
-using AutoMapper;
 using Questionnaire.DAL.EntityFramework;
 using Questionnaire.Domain;
-using Questionnaire.DTOs;
 using System.Collections.Generic;
 
 namespace Questionnaire.Controlers
@@ -10,9 +8,8 @@ namespace Questionnaire.Controlers
     public class UserController
     {
         readonly UnitOfWork iUOfW = new UnitOfWork(new QuestionnaireDbContext());
-        private readonly IMapper _mapper;
 
-        public UserController(IMapper mapper) => _mapper = mapper;
+        public UserController() { }
 
         public void AddUser(string pUsername, string pPassword, Boolean pAdmin)
         {
@@ -37,11 +34,9 @@ namespace Questionnaire.Controlers
         /// <summary>
         /// Returns an user by his username
         /// </summary>
-		public UserDTO GetUser(string username)
+		public User GetUser(string username)
         {
-            User user = iUOfW.UserRepository.GetByUserName(username);
-            UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
-            return userDTO;
+            return iUOfW.UserRepository.GetByUserName(username);
         }
 
         /// <summary>
@@ -56,15 +51,9 @@ namespace Questionnaire.Controlers
         /// <summary>
         /// Gets the top 20 High Scores
         /// </summary>
-        public List<ScoreDTO> GetHighScores()
+        public List<Score> GetHighScores()
         {
-            List<ScoreDTO> scores = new List<ScoreDTO>();
-
-            foreach (Score scr in iUOfW.UserRepository.GetHighScores())
-            {
-                scores.Add(_mapper.Map<Score, ScoreDTO>(scr));
-            }
-            return scores;
+            return iUOfW.UserRepository.GetHighScores();
         }
     }
 }

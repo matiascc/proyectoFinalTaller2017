@@ -19,11 +19,12 @@ namespace Questionnaire.DAL.EntityFramework
         /// Saves a question and its respective options in the DB
         /// </summary>
         /// <param name="pSource">Source class from where to get the questions</param>
-        public void SaveQuestions(ISource pSource, string pDificulty, int pCategory, int pAmount, UnitOfWork pUnitOfWork)
+        public void SaveQuestions(ISource pSource, string pDificulty, string pCategory, int pAmount, UnitOfWork pUnitOfWork)
         {
             Set selectedSet = pUnitOfWork.SetRepository.GetSetByName(pSource.Name);
+            int categoryNumber = pSource.CategoryDictionary.FirstOrDefault(x => x.Value == pCategory).Key;
 
-            List<Question> questionsList = pSource.GetQuestions(pDificulty, pCategory, pAmount);
+            List<Question> questionsList = pSource.GetQuestions(pDificulty, categoryNumber, pAmount);
 
             try
             {
@@ -70,7 +71,19 @@ namespace Questionnaire.DAL.EntityFramework
         {
             pSentence = pSentence.Replace("&amp;", "&");
             pSentence = pSentence.Replace("&quot;", "\"");
+            pSentence = pSentence.Replace("&ldquo;", "`");
+            pSentence = pSentence.Replace("&rdquo;", "´");   
             pSentence = pSentence.Replace("&#039;", "'");
+            pSentence = pSentence.Replace("&rsquo;", "'");
+            pSentence = pSentence.Replace("&ouml;", "ö");
+            pSentence = pSentence.Replace("&uuml;", "ü");
+            pSentence = pSentence.Replace("&aacute;", "á");
+            pSentence = pSentence.Replace("&eacute;", "é");
+            pSentence = pSentence.Replace("&iacute;", "í");
+            pSentence = pSentence.Replace("&oacute;", "ó");
+            pSentence = pSentence.Replace("&uacute;", "ú");
+            pSentence = pSentence.Replace("&ocirc;", "ô");
+            pSentence = pSentence.Replace("&ucirc;", "û");
             return pSentence;
         }
 

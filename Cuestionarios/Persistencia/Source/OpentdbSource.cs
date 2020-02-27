@@ -56,7 +56,16 @@ namespace Questionnaire.Source
 
             dynamic mResponseJSON = CallTheQuestionAPI(this.Url);
 
-            List<Question> questionsList = new List<Question>();
+            if (mResponseJSON.response_code == 1)
+            {
+                throw new NullReferenceException("No Results");
+            }
+            else if (mResponseJSON.response_code == 2)
+            {
+                throw new ArgumentException("Invalid Parameter");
+            }
+
+                List<Question> questionsList = new List<Question>();
 
             foreach (var bResponseItem in mResponseJSON.results)
             {

@@ -69,7 +69,6 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMapper\AutoMapper.cs" />
     <Compile Include="Controlers\GameController.cs" />
     <Compile Include="Controlers\QuestionController.cs" />
     <Compile Include="Controlers\SetController.cs" />
@@ -97,11 +96,6 @@
     <Compile Include="Domain\Score.cs" />
     <Compile Include="Domain\Set.cs" />
     <Compile Include="Domain\User.cs" />
-    <Compile Include="DTOs\OptionDTO.cs" />
-    <Compile Include="DTOs\QuestionDTO.cs" />
-    <Compile Include="DTOs\ScoreDTO.cs" />
-    <Compile Include="DTOs\SetDTO.cs" />
-    <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Questionnaire.Controlers;
-using Questionnaire.DTOs;
+using Questionnaire.Domain;
 using Npgsql;
 
 namespace UI
@@ -35,7 +35,7 @@ namespace UI
         {
             try
             {
-                UserDTO usr = _usrController.GetUser(tb_username.Text);
+                User usr = _usrController.GetUser(tb_username.Text);
                 
                 logger.Debug("Trying to log in as username: " + tb_username.Text);
                 

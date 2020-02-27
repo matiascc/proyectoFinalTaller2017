@@ -136,7 +136,7 @@
             this.nud_amount.Enabled = false;
             this.nud_amount.Location = new System.Drawing.Point(71, 153);
             this.nud_amount.Maximum = new decimal(new int[] {
-            200,
+            50,
             0,
             0,
             0});
