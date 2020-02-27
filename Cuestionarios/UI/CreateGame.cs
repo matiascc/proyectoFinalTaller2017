@@ -129,5 +129,10 @@ namespace UI
             this.Owner.Show();
         }
 
+        private void b_HighScores_Click(object sender, EventArgs e)
+        {
+            HighScores ventana = new HighScores(_usrController);
+            ventana.ShowDialog();
+        }
     }
 }

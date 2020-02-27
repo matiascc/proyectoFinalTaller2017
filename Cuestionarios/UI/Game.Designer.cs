@@ -43,7 +43,6 @@
             this.b_opt4 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.l_time = new System.Windows.Forms.Label();
-            this.b_HighScores = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -166,22 +165,11 @@
             this.l_time.TabIndex = 16;
             this.l_time.Text = "...";
             // 
-            // b_HighScores
-            // 
-            this.b_HighScores.Location = new System.Drawing.Point(710, 242);
-            this.b_HighScores.Name = "b_HighScores";
-            this.b_HighScores.Size = new System.Drawing.Size(153, 23);
-            this.b_HighScores.TabIndex = 17;
-            this.b_HighScores.Text = "HighScores (borrar)";
-            this.b_HighScores.UseVisualStyleBackColor = true;
-            this.b_HighScores.Click += new System.EventHandler(this.b_HighScores_Click);
-            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(912, 390);
-            this.Controls.Add(this.b_HighScores);
             this.Controls.Add(this.l_time);
             this.Controls.Add(this.b_opt4);
             this.Controls.Add(this.b_opt3);
@@ -218,6 +206,5 @@
         private System.Windows.Forms.Button b_opt4;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label l_time;
-        private System.Windows.Forms.Button b_HighScores;
     }
 }

@@ -22,6 +22,7 @@ namespace UI
         _setController = setController;
         _questController = questController;
         _sourceController = sourceController;
+        _gameController = gameController;
 
         InitializeComponent();
         }

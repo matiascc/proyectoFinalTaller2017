@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.NewGame = new System.Windows.Forms.Button();
             this.b_LogOut = new System.Windows.Forms.Button();
+            this.b_HighScores = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nud_amount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,11 +138,22 @@
             this.b_LogOut.UseVisualStyleBackColor = true;
             this.b_LogOut.Click += new System.EventHandler(this.B_LogOut_Click);
             // 
+            // b_HighScores
+            // 
+            this.b_HighScores.Location = new System.Drawing.Point(127, 211);
+            this.b_HighScores.Name = "b_HighScores";
+            this.b_HighScores.Size = new System.Drawing.Size(75, 23);
+            this.b_HighScores.TabIndex = 24;
+            this.b_HighScores.Text = "High Scores";
+            this.b_HighScores.UseVisualStyleBackColor = true;
+            this.b_HighScores.Click += new System.EventHandler(this.b_HighScores_Click);
+            // 
             // CreateGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(329, 264);
+            this.Controls.Add(this.b_HighScores);
             this.Controls.Add(this.b_LogOut);
             this.Controls.Add(this.NewGame);
             this.Controls.Add(this.nud_amount);
@@ -172,5 +184,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button NewGame;
         private System.Windows.Forms.Button b_LogOut;
+        private System.Windows.Forms.Button b_HighScores;
     }
 }

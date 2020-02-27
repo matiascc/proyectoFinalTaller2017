@@ -180,10 +180,5 @@ namespace UI
             this.Close();
         }
 
-        private void b_HighScores_Click(object sender, EventArgs e)
-        {
-            HighScores ventana = new HighScores(_usrController);
-            ventana.ShowDialog();
-        }
     }
 }
