@@ -9,10 +9,10 @@ namespace Questionnaire.Domain
     {
         [Key]
         public int Id { get; set; }
-        public double ScoreValue { get; set; }
-        public string Username { get; set; }
-        public User User { get; set; }
-        public double SecondsUsed { get; set; }
-        public DateTime DateOfScore { get; set; }
+        public virtual double ScoreValue { get; set; }
+        public virtual string Username { get; set; }
+        public virtual User User { get; set; }
+        public virtual double SecondsUsed { get; set; }
+        public virtual DateTime DateOfScore { get; set; }
     }
 }
