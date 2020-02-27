@@ -80,6 +80,7 @@
             this.cb_dificulty.Name = "cb_dificulty";
             this.cb_dificulty.Size = new System.Drawing.Size(154, 21);
             this.cb_dificulty.TabIndex = 3;
+            this.cb_dificulty.SelectedIndexChanged += new System.EventHandler(this.cb_dificulty_SelectedIndexChanged);
             // 
             // b_loadQuestions
             // 
@@ -94,7 +95,6 @@
             // 
             // b_eraseQuestions
             // 
-            this.b_eraseQuestions.Enabled = false;
             this.b_eraseQuestions.Location = new System.Drawing.Point(149, 206);
             this.b_eraseQuestions.Name = "b_eraseQuestions";
             this.b_eraseQuestions.Size = new System.Drawing.Size(76, 36);
@@ -140,9 +140,19 @@
             0,
             0,
             0});
+            this.nud_amount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nud_amount.Name = "nud_amount";
             this.nud_amount.Size = new System.Drawing.Size(154, 20);
             this.nud_amount.TabIndex = 13;
+            this.nud_amount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // b_LogOut
             // 

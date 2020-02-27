@@ -2,6 +2,7 @@
 using Questionnaire.Source;
 using Questionnaire.Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Questionnaire.Controlers
 {
@@ -27,7 +28,11 @@ namespace Questionnaire.Controlers
             return iUOfW.QuestionRepository.GetQuestions(set, pDifficulty, pCategory, pAmount);
         }
 
-        
-
+        public List<Question> GetAllQuestionsOfSet(ISource pSource)
+        {
+            int set = iUOfW.SetRepository.GetSetByName(pSource.Name).Id;
+            List<Question> listQuestions = iUOfW.QuestionRepository.GetAll().ToList();
+            return listQuestions.FindAll(q => q.SetID == set);
+        }
     }
 }

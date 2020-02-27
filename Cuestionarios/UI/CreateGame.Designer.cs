@@ -36,7 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.NewGame = new System.Windows.Forms.Button();
+            this.b_NewGame = new System.Windows.Forms.Button();
             this.b_LogOut = new System.Windows.Forms.Button();
             this.b_HighScores = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nud_amount)).BeginInit();
@@ -59,7 +59,6 @@
             0,
             0,
             0});
-            this.nud_amount.ValueChanged += new System.EventHandler(this.Nud_amount_ValueChanged);
             // 
             // cb_set
             // 
@@ -128,15 +127,15 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Category:";
             // 
-            // NewGame
+            // b_NewGame
             // 
-            this.NewGame.Location = new System.Drawing.Point(127, 181);
-            this.NewGame.Name = "NewGame";
-            this.NewGame.Size = new System.Drawing.Size(75, 23);
-            this.NewGame.TabIndex = 22;
-            this.NewGame.Text = "New game";
-            this.NewGame.UseVisualStyleBackColor = true;
-            this.NewGame.Click += new System.EventHandler(this.Button1_Click);
+            this.b_NewGame.Location = new System.Drawing.Point(127, 181);
+            this.b_NewGame.Name = "b_NewGame";
+            this.b_NewGame.Size = new System.Drawing.Size(75, 23);
+            this.b_NewGame.TabIndex = 22;
+            this.b_NewGame.Text = "New game";
+            this.b_NewGame.UseVisualStyleBackColor = true;
+            this.b_NewGame.Click += new System.EventHandler(this.b_NewGame_Click);
             // 
             // b_LogOut
             // 
@@ -165,7 +164,7 @@
             this.ClientSize = new System.Drawing.Size(329, 264);
             this.Controls.Add(this.b_HighScores);
             this.Controls.Add(this.b_LogOut);
-            this.Controls.Add(this.NewGame);
+            this.Controls.Add(this.b_NewGame);
             this.Controls.Add(this.nud_amount);
             this.Controls.Add(this.cb_set);
             this.Controls.Add(this.label4);
@@ -193,7 +192,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button NewGame;
+        private System.Windows.Forms.Button b_NewGame;
         private System.Windows.Forms.Button b_LogOut;
         private System.Windows.Forms.Button b_HighScores;
     }

@@ -16,7 +16,6 @@ namespace UI
         private readonly UserController _usrController;
         private readonly GameController _gameController;
         private ISource pSource;
-        private Set _setSelected;
         private readonly static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly User _usr;
 
@@ -30,7 +29,7 @@ namespace UI
             _usr = usr;
 
             InitializeComponent();
-            NewGame.Enabled = false;
+            b_NewGame.Enabled = false;
 
             //Load the sets into the comboBox
             foreach (var item in _setController.GetAllSet())
@@ -39,7 +38,9 @@ namespace UI
             }
         }
 
-
+        /// <summary>
+        /// Load the categories comboBox when a set is selected
+        /// </summary>
         private void Cb_set_SelectedIndexChanged(object sender, EventArgs e)
         {
             cb_category.Enabled = true;
@@ -47,9 +48,7 @@ namespace UI
             cb_category.Items.Clear();
             var lCategory = new List<string>();
 
-            _setSelected = _setController.GetAllSet().Find(x => x.Name == cb_set.Text);
-
-            foreach (Question question in _setSelected.Questions)
+            foreach (Question question in _questionController.GetAllQuestionsOfSet(pSource))
             {
                 lCategory.Add(pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value);             
             }
@@ -59,7 +58,10 @@ namespace UI
                 cb_category.Items.Add(category);
             }
         }
-        
+
+        /// <summary>
+        /// Load the difficulty comboBox when a category is selected
+        /// </summary>
         private void Cb_category_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedCategory = cb_category.Text;
@@ -68,7 +70,7 @@ namespace UI
             cb_difficulty.Items.Clear();
             var lDifficulty = new List<string>();
 
-            foreach (Question question in _setSelected.Questions)
+            foreach (Question question in _questionController.GetAllQuestionsOfSet(pSource))
             {
                 if (pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value == cb_category.Text)
                 {
@@ -80,14 +82,17 @@ namespace UI
             {
                 cb_difficulty.Items.Add(difficulty);
             }
-
         }
+
+        /// <summary>
+        /// Establish the maximum amount of questions to select when a difficulty is selected
+        /// </summary>
         private void Cb_difficulty_SelectedIndexChanged(object sender, EventArgs e)
         {
             nud_amount.Enabled = true;
             var lQuestions = new List<Question>();
 
-            foreach (Question question in _setSelected.Questions)
+            foreach (Question question in _questionController.GetAllQuestionsOfSet(pSource))
             {
                 if ((pSource.CategoryDictionary.FirstOrDefault(x => x.Key == question.Category).Value == cb_category.Text)
                     && (pSource.DifficultyDictionary.FirstOrDefault(x => x.Key == question.Difficulty).Value == cb_difficulty.Text))
@@ -96,15 +101,13 @@ namespace UI
                 }
             }
             nud_amount.Maximum = lQuestions.Count();
-        }
-        private void Nud_amount_ValueChanged(object sender, EventArgs e)
-        {
-            NewGame.Enabled = true;
-        }
 
-        private void Button1_Click(object sender, EventArgs e)
+            b_NewGame.Enabled = true;
+        }
+        
+        private void b_NewGame_Click(object sender, EventArgs e)
         {
-            Game ventana = new Game(_usrController, _questionController, _sourceController, _gameController, _usr, cb_set.Text , cb_difficulty.Text , cb_category.Text , nud_amount.Value);
+            Game ventana = new Game(_usrController, _questionController, _sourceController, _gameController, _usr, cb_set.Text, cb_difficulty.Text, cb_category.Text, nud_amount.Value);
             ventana.Owner = this;
             ventana.Show();
             this.Hide();

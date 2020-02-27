@@ -37,8 +37,6 @@ namespace UI
             cb_category.Enabled = true;
             cb_dificulty.Enabled = true;
             nud_amount.Enabled = true;
-            b_loadQuestions.Enabled = true;
-            b_eraseQuestions.Enabled = true;
 
             cb_category.Items.Clear();
 
@@ -119,6 +117,11 @@ namespace UI
         {
             logger.Debug("User logged out");
             this.Owner.Show();
+        }
+
+        private void cb_dificulty_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            b_loadQuestions.Enabled = true;
         }
     }
 }
